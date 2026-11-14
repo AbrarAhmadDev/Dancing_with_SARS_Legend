@@ -14,6 +14,7 @@ This repository contains the first safe prototype for the NASA Space Apps “Dan
 - Deployment workflow gated on a successful CI run; it requires `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` GitHub Actions secrets.
 - Phase 1 catalog entry for the NASA ARIA/OPERA Brazil flood event, with validation of source and observation metadata.
 - Phase 2 OPERA service metadata snapshot with the real May 8, May 11, and maximum-extent layers.
+- Phase 4 Supabase observation adapter with a safe local-raster fallback when deployment variables are absent.
 
 ## Run locally
 
@@ -45,6 +46,12 @@ Each phase must pass its test checklist before the next phase begins.
 - `npm run fetch:opera` retrieves NASA’s public service metadata.
 - `npm run validate:ingestion` confirms the expected dated layers exist.
 - The source description and limitations remain stored with the snapshot.
+
+### Phase 4 test gate
+
+- With no Supabase variables, the app remains usable using the real local OPERA previews.
+- With `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, observations are queried by event slug.
+- No service-role key is accepted by the frontend.
 
 ## Deployment authentication
 
