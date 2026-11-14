@@ -1,4 +1,4 @@
-import { brazilFrames, pakistanFrames } from './data';
+import { brazilFrames, pakistanFrames, pakistanWaterFrames } from './data';
 
 export const simulations = [
   {
@@ -17,6 +17,15 @@ export const simulations = [
     description: 'A judge-facing case file anchored to confirmed NISAR coverage in Pakistan; new AOIs can be added from the catalog.',
     frames: pakistanFrames,
     source: 'NASA CMR / ASF Vertex',
+    accent: 'teal'
+  },
+  {
+    id: 'indus-water-mask',
+    title: 'Indus water mask',
+    subtitle: 'OPERA DSWx-S1 repeat passes',
+    description: 'A Pakistan water-focused case file using real Sentinel-1-derived OPERA surface-water browse previews.',
+    frames: pakistanWaterFrames,
+    source: 'NASA OPERA DSWx-S1',
     accent: 'teal'
   },
   {

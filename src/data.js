@@ -12,4 +12,9 @@ export const pakistanFrames = [
   { date: '2026-10-17', label: 'Late-season pass', image: '/data/pakistan/indus-delta-nisar-2026-10-17.png', texture: '/data/pakistan/indus-delta-context-2026-10-17.jpg', sensor: 'NISAR', product: 'L2 GCOV', maturity: 'PROVISIONAL', layerLabel: 'NISAR GCOV backscatter preview', note: 'Repeat-pass L-band radar view after the monsoon window.' }
 ];
 
+export const pakistanWaterFrames = [
+  { date: '2026-06-03', label: 'Early water mask', image: '/data/pakistan/indus-delta-dswx-s1-2026-06-03.png', texture: '/data/pakistan/indus-delta-context-2026-10-17.jpg', sensor: 'Sentinel-1A', product: 'OPERA DSWx-S1', maturity: 'V1', layerLabel: 'OPERA surface-water browse preview', note: 'Pakistan Indus Delta surface-water browse preview from the OPERA DSWx-S1 product.' },
+  { date: '2026-09-14', label: 'Late-season water mask', image: '/data/pakistan/indus-delta-dswx-s1-2026-09-14.png', texture: '/data/pakistan/indus-delta-context-2026-10-17.jpg', sensor: 'Sentinel-1D', product: 'OPERA DSWx-S1', maturity: 'V1', layerLabel: 'OPERA surface-water browse preview', note: 'Repeat-pass surface-water browse preview for the same Indus Delta tile.' }
+];
+
 export const frames = pakistanFrames;

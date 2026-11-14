@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { geoMercator, geoPath } from 'd3-geo';
 import { ArrowLeftRight, Brain, ChevronRight, Database, Layers3, Map as MapIcon, Maximize2, Minus, Plus, Satellite, ShieldCheck, Waves } from 'lucide-react';
-import { frames } from './data';
+import { brazilFrames, frames, pakistanWaterFrames } from './data';
 import { simulations, getSimulation } from './simulations';
 import { loadObservations } from './lib/observations';
 import './styles.css';
@@ -63,8 +63,8 @@ function InteractiveMap({ frame, compact = false, layerOpacity = 1, showContext 
     </div>
     <div className="map-vignette" />
     <div className="map-tools" aria-label="Map controls">
-      <button type="button" aria-label="Zoom in" onPointerDown={(event) => event.stopPropagation()} onClick={() => setZoom((value) => Math.min(2.6, value + 0.2))}><Plus size={15} /></button>
-      <button type="button" aria-label="Zoom out" onPointerDown={(event) => event.stopPropagation()} onClick={() => setZoom((value) => Math.max(1, value - 0.2))}><Minus size={14} /></button>
+      <button type="button" aria-label="Zoom in" onPointerDown={(event) => event.stopPropagation()} onClick={() => updateView({ ...view, zoom: Math.min(2.6, view.zoom + 0.2) })}><Plus size={15} /></button>
+      <button type="button" aria-label="Zoom out" onPointerDown={(event) => event.stopPropagation()} onClick={() => updateView({ ...view, zoom: Math.max(1, view.zoom - 0.2) })}><Minus size={14} /></button>
       <button type="button" aria-label="Reset map view" onPointerDown={(event) => event.stopPropagation()} onClick={resetView}><Maximize2 size={14} /></button>
     </div>
     <div className="map-label"><span className="legend-dot flood-dot" /> {frame.layerLabel ?? 'detected surface water'}</div>
@@ -125,7 +125,7 @@ function Compare({ simulation }) {
 }
 
 const quizQuestions = [
-  { theme: 'water', question: 'Which conclusion is safest from this before/after water-mask pair?', answer: 'The observed surface-water footprint changed between the two dates.', before: '/data/overlays/brazil-flood-apr21-overlay.png', after: '/data/overlays/brazil-flood-may06-overlay.png', beforeLabel: 'Before · OPERA HLS', afterLabel: 'After · OPERA HLS', options: ['The observed surface-water footprint changed between the two dates.', 'Every nearby building was damaged.', 'The image proves the next flood will be larger.'] },
+  { theme: 'water', question: 'Which conclusion is safest from this before/after water-mask pair?', answer: 'The observed surface-water footprint changed between the two dates.', before: pakistanWaterFrames[0].image, after: pakistanWaterFrames[1].image, beforeLabel: 'June · OPERA DSWx-S1', afterLabel: 'September · OPERA DSWx-S1', options: ['The observed surface-water footprint changed between the two dates.', 'Every nearby building was damaged.', 'The image proves the next flood will be larger.'] },
   { theme: 'radar', question: 'A mangrove edge changes tone between two NISAR views. What should a student say?', answer: 'Radar backscatter changed; the physical driver needs corroboration.', before: '/data/pakistan/indus-delta-nisar-2026-06-19.png', after: '/data/pakistan/indus-delta-nisar-2026-10-17.png', beforeLabel: 'June · NISAR GCOV', afterLabel: 'October · NISAR GCOV', options: ['Radar backscatter changed; the physical driver needs corroboration.', 'The map proves all trees were cut.', 'The brighter pixels are automatically hotter.'] },
   { theme: 'radar', question: 'Why is a repeated NISAR pass useful for the Indus Delta?', answer: 'The same area can be compared at different dates using radar response.', before: '/data/pakistan/indus-delta-nisar-2026-08-18.png', after: '/data/pakistan/indus-delta-nisar-2026-10-17.png', beforeLabel: 'Monsoon · repeat pass', afterLabel: 'Late season · repeat pass', options: ['The same area can be compared at different dates using radar response.', 'It turns radar into an optical photograph.', 'It removes the need for a source or date.'] },
   { theme: 'method', question: 'What does a gap between timeline points mean?', answer: 'There was no included observation at that date.', before: '/data/pakistan/indus-delta-nisar-2026-06-19.png', after: '/data/pakistan/indus-delta-nisar-2026-10-17.png', beforeLabel: 'First valid scene', afterLabel: 'Next selected scene', options: ['There was no included observation at that date.', 'The map failed to load.', 'The flood disappeared and returned every day.'] }
