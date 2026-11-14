@@ -11,6 +11,7 @@ This repository contains the first safe prototype for the NASA Space Apps “Dan
 - Explicit demo labeling; no synthetic frame is presented as real satellite evidence.
 - Supabase observation schema ready for NISAR, Sentinel-1, and OPERA DSWx-S1 ingestion.
 - GitHub Actions build verification.
+- Deployment workflow gated on a successful CI run; it requires `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` GitHub Actions secrets.
 
 ## Run locally
 
@@ -30,6 +31,10 @@ npm run dev
 7. Deployment: GitHub Actions gates builds before Vercel deployment.
 
 Each phase must pass its test checklist before the next phase begins.
+
+## Deployment authentication
+
+The local repository is intentionally not storing credentials. Before pushing/deploying, authenticate GitHub for the local remote, then add the three Vercel secrets above in the repository's Actions settings. Supabase credentials belong in deployment environment variables and the schema should be applied through a reviewed migration. Never commit Earthdata, FIRMS, Supabase, or Vercel secrets.
 
 ## Data policy
 
