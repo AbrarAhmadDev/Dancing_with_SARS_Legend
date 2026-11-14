@@ -1,76 +1,121 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Play, Pause, RotateCcw, Waves, Satellite, Database, ShieldCheck } from 'lucide-react';
+import { ArrowLeftRight, Brain, ChevronRight, Database, Layers3, Map as MapIcon, Maximize2, Minus, Plus, Satellite, ShieldCheck, Waves } from 'lucide-react';
 import { frames } from './data';
+import { simulations, getSimulation } from './simulations';
 import { loadObservations } from './lib/observations';
-import { DEMO_DURATION_MS, frameIntervalMs } from './timeline';
 import './styles.css';
 import './raster.css';
 import './earth-map.css';
+import './dashboard.css';
 
-function FloodMap({ frame }) {
-  return <div className="map" role="img" aria-label={`${frame.label} flood extent from NASA OPERA`}>
-    <img className="map-context" src={frame.texture} alt="" />
-    <img className="raster" src={frame.image} alt="" />
+const tabs = [
+  { id: 'explore', label: 'Explore', icon: MapIcon },
+  { id: 'simulations', label: 'Simulations', icon: Layers3 },
+  { id: 'compare', label: 'Compare', icon: ArrowLeftRight },
+  { id: 'quiz', label: 'Quiz', icon: Brain }
+];
+
+function daysBetween(start, end) {
+  return Math.round((new Date(end) - new Date(start)) / 86400000);
+}
+
+function InteractiveMap({ frame, compact = false }) {
+  const [zoom, setZoom] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [drag, setDrag] = useState(null);
+
+  useEffect(() => { setZoom(1); setOffset({ x: 0, y: 0 }); }, [frame.image]);
+  function onPointerDown(event) { event.currentTarget.setPointerCapture(event.pointerId); setDrag({ x: event.clientX - offset.x, y: event.clientY - offset.y }); }
+  function onPointerMove(event) { if (drag) setOffset({ x: event.clientX - drag.x, y: event.clientY - drag.y }); }
+  function onWheel(event) { event.preventDefault(); setZoom((value) => Math.min(2.6, Math.max(1, value + (event.deltaY < 0 ? 0.12 : -0.12)))); }
+  function resetView() { setZoom(1); setOffset({ x: 0, y: 0 }); }
+
+  return <div className={`interactive-map ${compact ? 'compact-map' : ''}`} role="img" aria-label={`${frame.label} flood extent from NASA OPERA`} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={() => setDrag(null)} onPointerCancel={() => setDrag(null)} onWheel={onWheel}>
+    <div className="map-viewport" style={{ transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})` }}>
+      <img className="map-context" src={frame.texture} alt="" draggable="false" />
+      <img className="raster" src={frame.image} alt="" draggable="false" />
+    </div>
+    <div className="map-vignette" />
+    <div className="map-tools" aria-label="Map controls">
+      <button type="button" aria-label="Zoom in" onPointerDown={(event) => event.stopPropagation()} onClick={() => setZoom((value) => Math.min(2.6, value + 0.2))}><Plus size={15} /></button>
+      <button type="button" aria-label="Zoom out" onPointerDown={(event) => event.stopPropagation()} onClick={() => setZoom((value) => Math.max(1, value - 0.2))}><Minus size={14} /></button>
+      <button type="button" aria-label="Reset map view" onPointerDown={(event) => event.stopPropagation()} onClick={resetView}><Maximize2 size={14} /></button>
+    </div>
     <div className="map-label"><span className="legend-dot flood-dot" /> detected surface water</div>
-    <div className="map-coordinates">DEMO AOI · 10 m equivalent display</div>
+    <div className="map-coordinates">DRAG TO PAN · SCROLL TO ZOOM</div>
   </div>;
 }
 
-function App() {
-  const [index, setIndex] = useState(0);
-  const [timeline, setTimeline] = useState(frames);
-  const [playing, setPlaying] = useState(false);
-  const [cached, setCached] = useState(() => localStorage.getItem('flood-demo-cache') === 'ready');
+function Timeline({ timeline, index, setIndex }) {
   const frame = timeline[index] ?? timeline[0];
+  if (!frame) return null;
+  return <div className="timeline-wrap">
+    <div className="timeline-top"><span>Observation timeline</span><strong>{frame.date} · {frame.label}</strong></div>
+    <input className="timeline-range" type="range" min="0" max={Math.max(timeline.length - 1, 0)} value={index} onChange={(event) => setIndex(Number(event.target.value))} aria-label="Select observation date" />
+    <div className="timeline-ticks">{timeline.map((item, itemIndex) => <button type="button" className={itemIndex === index ? 'is-active' : ''} key={`${item.date}-${item.label}`} onClick={() => setIndex(itemIndex)}><span />{item.date.slice(5)}</button>)}</div>
+    <div className="timeline-note">{timeline.length} cached observations · {daysBetween(timeline[0].date, timeline[timeline.length - 1].date)} calendar days · gaps are real acquisition gaps</div>
+  </div>;
+}
 
-  useEffect(() => {
-    loadObservations('brazil-flood-2024').then((result) => {
-      if (result.source === 'supabase' && result.frames.length) {
-        setTimeline(result.frames.map((item) => ({
-          date: item.observed_at.slice(0, 10),
-          label: item.product || 'Observation',
-          image: item.asset_url,
-          texture: '/data/brazil-texture-may11.jpg',
-          sensor: item.sensor || 'SAR',
-          product: item.product || 'OPERA',
-          note: `${item.sensor || 'SAR'} observation`
-        })).filter((item) => item.image));
-      }
-    }).catch(() => {});
-  }, []);
+function Explore({ simulation, setTab }) {
+  const [index, setIndex] = useState(0);
+  const timeline = simulation.frames;
+  const frame = timeline[index] ?? timeline[0];
+  return <section className="content-section">
+    <div className="section-heading"><div><span className="eyebrow">01 / EXPLORE</span><h2>Follow the water footprint</h2><p>Move through actual observation dates. Drag the map to inspect the landscape and zoom into the purple water mask.</p></div><div className="cache-pill"><span /> Locally cached · {timeline.length} frames</div></div>
+    <div className="explore-grid"><div><InteractiveMap frame={frame} /><Timeline timeline={timeline} index={index} setIndex={setIndex} /></div><aside className="insight-panel"><div className="panel-kicker">CURRENT OBSERVATION</div><h3>{frame.label}</h3><p aria-live="polite">{frame.note}</p><dl className="facts"><div><dt>Acquired</dt><dd>{frame.date}</dd></div><div><dt>Product</dt><dd>{frame.product}</dd></div><div><dt>Sensor</dt><dd>{frame.sensor}</dd></div><div><dt>Resolution</dt><dd>30 m</dd></div></dl><div className="trust-note"><ShieldCheck size={16} /><span>Observed NASA OPERA layer. No missing date has been filled with synthetic satellite evidence.</span></div><button className="text-button" type="button" onClick={() => setTab('compare')}>Open side-by-side comparison <ChevronRight size={15} /></button></aside></div>
+  </section>;
+}
 
-  useEffect(() => {
-    if (!playing) return undefined;
-    const timer = setInterval(() => setIndex((value) => {
-      if (value === timeline.length - 1) { setPlaying(false); return value; }
-      return value + 1;
-    }), frameIntervalMs(timeline.length));
-    return () => clearInterval(timer);
-  }, [playing, timeline.length]);
+function Simulations({ selectedId, setSelectedId, setTab }) {
+  return <section className="content-section"><div className="section-heading"><div><span className="eyebrow">02 / SIMULATIONS</span><h2>Choose a cached case file</h2><p>These are locally stored views of the same event, each using a different observation mix.</p></div><div className="cache-pill"><span /> Offline-ready catalog</div></div><div className="simulation-grid">{simulations.map((simulation) => <button className={`simulation-card ${selectedId === simulation.id ? 'is-selected' : ''}`} type="button" key={simulation.id} onClick={() => { setSelectedId(simulation.id); setTab('explore'); }}><div className={`simulation-swatch ${simulation.accent}`}><Satellite size={22} /></div><div><div className="card-kicker">{simulation.frames.length} LOCAL FRAMES · {simulation.source}</div><h3>{simulation.title}</h3><strong>{simulation.subtitle}</strong><p>{simulation.description}</p><span className="open-case">Open case <ChevronRight size={14} /></span></div></button>)}</div><div className="catalog-note"><Database size={16} /><span>Cached data is bundled with this site for instant repeat viewing. Supabase observations can still load when configured.</span></div></section>;
+}
 
-  function runDemo() {
-    localStorage.setItem('flood-demo-cache', 'ready');
-    setCached(true); setIndex(0); setPlaying(true);
-  }
+function FramePicker({ frames: availableFrames, value, onChange, label }) {
+  return <label className="field-label">{label}<select className="field-select" value={value} onChange={(event) => onChange(Number(event.target.value))}>{availableFrames.map((item, index) => <option value={index} key={`${item.date}-${item.label}`}>{item.date} · {item.label}</option>)}</select></label>;
+}
 
-  return <main>
-    <nav><div className="brand"><Waves size={20} /> DANCING WITH THE SARs</div><div className="nav-tag">NASA SPACE APPS · FLOOD PULSE</div></nav>
-    <section className="hero">
-      <div className="eyebrow">SURFACE CHANGE / 01</div>
-      <h1>When the river<br /><em>steps beyond its banks.</em></h1>
-      <p className="lede">A time-aware flood story built from NASA OPERA observations. Move through real acquisition dates and watch the detected water footprint build across the event.</p>
-      <div className="actions"><button className="primary" onClick={runDemo}>{playing ? <Pause size={16} /> : <Play size={16} />} {playing ? 'Playing demo' : 'Play full demo'}</button><button className="ghost" onClick={() => { setPlaying(false); setIndex(0); }}><RotateCcw size={15} /> Reset</button></div>
-      <div className="status"><span className="pulse" /> {cached ? 'Demo cached locally · instant replay enabled' : 'First replay will cache locally'}</div>
-    </section>
-    <section className="dashboard">
-      <div className="dash-head"><div><div className="eyebrow">EVENT TIMELINE</div><h2>Flood pulse · lower valley</h2></div><div className="source"><Satellite size={16} /> SAR change detection</div></div>
-      <div className="timeline"><div className="timeline-line" style={{ width: `${(index / Math.max(timeline.length - 1, 1)) * 100}%` }} />{timeline.map((item, i) => <button key={`${item.date}-${i}`} className={`tick ${i === index ? 'active' : ''}`} onClick={() => { setPlaying(false); setIndex(i); }}><span className="tick-dot" /><small>{item.date.slice(5)}</small><b>{item.label}</b></button>)}</div>
-      <div className="demo-progress" aria-label={`Demo progress: observation ${index + 1} of ${timeline.length}`}><i style={{ width: `${((index + 1) / timeline.length) * 100}%` }} /></div><div className="time-gap">{timeline.length} real observations · 20 calendar days · {Math.round(DEMO_DURATION_MS / 1000)} second replay · gaps are preserved</div>
-      <div className="visual-grid"><FloodMap frame={frame} /><aside className="metrics"><div className="metric-kicker">CURRENT OBSERVATION</div><h3>{frame.label}</h3><p aria-live="polite">{frame.note}</p><div className="metric"><span>Source raster</span><strong>30<small> m</small></strong><div className="bar"><i style={{ width: '100%' }} /></div></div><div className="metric"><span>Sensor / product</span><strong>{frame.sensor}</strong><div className="bar warm"><i style={{ width: '100%' }} /></div></div><div className="callout"><ShieldCheck size={17} /><span>Observed NASA OPERA layer. Missing dates remain gaps; no synthetic image is presented as satellite evidence.</span></div></aside></div>
-      <div className="data-strip"><div><Database size={16} /><span><b>NASA OPERA</b> · {frame.product}</span></div><span>Source preview · 30 m spatial resolution</span></div>
-    </section>
-    <footer><span>Built for “Dancing with the SARs”</span><span>NASA data will be credited per product metadata · <a href="https://nisar.jpl.nasa.gov/" target="_blank" rel="noreferrer">mission context</a></span></footer>
+function Compare({ simulation }) {
+  const timeline = simulation.frames;
+  const [leftIndex, setLeftIndex] = useState(0);
+  const [rightIndex, setRightIndex] = useState(Math.max(timeline.length - 1, 0));
+  const left = timeline[leftIndex] ?? timeline[0];
+  const right = timeline[rightIndex] ?? timeline[0];
+  return <section className="content-section"><div className="section-heading"><div><span className="eyebrow">03 / COMPARE</span><h2>See the same area at two moments</h2><p>Start and end are selected by default. Change either date to study how the observed footprint shifts.</p></div><div className="compare-span"><ArrowLeftRight size={16} /> {daysBetween(left.date, right.date)} days apart</div></div><div className="compare-controls"><FramePicker label="Earlier observation" frames={timeline} value={leftIndex} onChange={setLeftIndex} /><FramePicker label="Later observation" frames={timeline} value={rightIndex} onChange={setRightIndex} /></div><div className="compare-grid"><div className="compare-panel"><div className="compare-title"><span>Earlier</span><strong>{left.date}</strong></div><InteractiveMap frame={left} compact /><p>{left.label} · {left.product} · {left.sensor}</p></div><div className="compare-panel"><div className="compare-title"><span>Later</span><strong>{right.date}</strong></div><InteractiveMap frame={right} compact /><p>{right.label} · {right.product} · {right.sensor}</p></div></div><div className="compare-foot"><span><i className="legend-square earlier" /> Earlier observation</span><span><i className="legend-square later" /> Later observation</span><span>Same AOI · {simulation.title}</span></div></section>;
+}
+
+const quizQuestions = [
+  { question: 'Why can Sentinel-1 help during cloudy flood conditions?', answer: 'Radar can acquire day or night and through cloud cover.', options: ['Radar can acquire day or night and through cloud cover.', 'Radar only works when the Sun is overhead.', 'Radar measures air temperature instead of surface response.'] },
+  { question: 'What does the purple layer represent?', answer: 'Detected surface water in the OPERA layer.', options: ['Detected surface water in the OPERA layer.', 'A population-density estimate.', 'A prediction of next month’s rainfall.'] },
+  { question: 'What does a gap between timeline points mean?', answer: 'There was no included observation at that date.', options: ['There was no included observation at that date.', 'The map failed to load.', 'The flood disappeared and returned every day.'] },
+  { question: 'Which product is used for radar confirmation?', answer: 'OPERA DSWx-S1.', options: ['OPERA DSWx-S1.', 'MODIS Land Surface Temperature.', 'A synthetic training image.'] }
+];
+
+function Quiz({ simulation }) {
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [selected, setSelected] = useState('');
+  const [score, setScore] = useState(0);
+  const question = quizQuestions[questionIndex];
+  const answered = Boolean(selected);
+  function choose(option) { if (answered) return; setSelected(option); if (option === question.answer) setScore((value) => value + 1); }
+  function next() { setQuestionIndex((value) => (value + 1) % quizQuestions.length); setSelected(''); }
+  return <section className="content-section quiz-section"><div className="section-heading"><div><span className="eyebrow">04 / QUIZ</span><h2>Read the map like a scientist</h2><p>Use the active case file, {simulation.title}, to test your understanding of radar and surface-water observations.</p></div><div className="score">{score} / {quizQuestions.length} correct</div></div><div className="quiz-layout"><div className="quiz-number">0{questionIndex + 1}<span>/ 0{quizQuestions.length}</span></div><div className="quiz-body"><h3>{question.question}</h3><div className="answer-list">{question.options.map((option) => <button type="button" className={selected ? option === question.answer ? 'correct' : option === selected ? 'incorrect' : '' : ''} onClick={() => choose(option)} key={option}>{option}</button>)}</div>{answered && <div className={`answer-feedback ${selected === question.answer ? 'correct-text' : 'incorrect-text'}`} aria-live="polite">{selected === question.answer ? 'Correct.' : `Not quite. ${question.answer}`}</div>}<button className="primary quiz-next" type="button" onClick={next}>{answered ? 'Next question' : 'Skip question'} <ChevronRight size={15} /></button></div></div></section>;
+}
+
+function App() {
+  const [tab, setTab] = useState('explore');
+  const [selectedId, setSelectedId] = useState(() => localStorage.getItem('sars-selected-simulation') || 'combined-event');
+  const [remoteFrames, setRemoteFrames] = useState(frames);
+  const simulation = useMemo(() => getSimulation(selectedId), [selectedId]);
+  useEffect(() => { localStorage.setItem('sars-selected-simulation', selectedId); }, [selectedId]);
+  useEffect(() => { loadObservations('brazil-flood-2024').then((result) => { if (result.source === 'supabase' && result.frames.length) setRemoteFrames(result.frames); }).catch(() => {}); }, []);
+  return <main className="app-shell">
+    <nav className="app-nav"><div className="brand"><Waves size={20} /> DANCING WITH THE SARs</div><div className="nav-meta">NASA SPACE APPS <span>·</span> FLOOD PULSE</div></nav>
+    <header className="site-header"><div><span className="eyebrow">SURFACE CHANGE / FLOOD INTELLIGENCE</span><h1>Watch a river<br /><em>rewrite the landscape.</em></h1><p>Explore NASA OPERA surface-water observations for a flood event in southern Brazil. Compare dates, inspect the map, and learn what the radar is seeing.</p></div><div className="header-context"><div className="context-label">ACTIVE CASE FILE</div><strong>{simulation.title}</strong><span>{simulation.subtitle}</span><small><span className="pulse" /> Cached locally · {simulation.frames.length} observations{remoteFrames.length !== frames.length ? ' · live catalog available' : ''}</small></div></header>
+    <div className="tab-shell"><div className="tab-list" role="tablist" aria-label="Flood dashboard sections">{tabs.map(({ id, label, icon: Icon }) => <button id={`${id}-tab`} className={`tab-button ${tab === id ? 'is-active' : ''}`} role="tab" aria-selected={tab === id} aria-controls={`${id}-panel`} type="button" key={id} onClick={() => setTab(id)}><Icon size={16} />{label}</button>)}</div><div className="tab-rule" /></div>
+    <div className="tab-content"><div id="explore-panel" role="tabpanel" aria-labelledby="explore-tab" hidden={tab !== 'explore'}>{tab === 'explore' && <Explore simulation={simulation} setTab={setTab} />}</div><div id="simulations-panel" role="tabpanel" aria-labelledby="simulations-tab" hidden={tab !== 'simulations'}>{tab === 'simulations' && <Simulations selectedId={selectedId} setSelectedId={setSelectedId} setTab={setTab} />}</div><div id="compare-panel" role="tabpanel" aria-labelledby="compare-tab" hidden={tab !== 'compare'}>{tab === 'compare' && <Compare simulation={simulation} />}</div><div id="quiz-panel" role="tabpanel" aria-labelledby="quiz-tab" hidden={tab !== 'quiz'}>{tab === 'quiz' && <Quiz simulation={simulation} />}</div></div>
+    <footer><span>Built for “Dancing with the SARs”</span><span><Database size={13} /> NASA OPERA · local catalog · <a href="https://nisar.jpl.nasa.gov/" target="_blank" rel="noreferrer">mission context</a></span></footer>
   </main>;
 }
 
