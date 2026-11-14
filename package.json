@@ -16,16 +16,17 @@
     "validate:ingestion": "node scripts/validate-ingestion.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "latest",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
+    "d3-geo": "^3.1.2",
+    "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "@supabase/supabase-js": "latest",
-    "lucide-react": "latest"
+    "typescript": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
-    "vitest": "latest",
-    "@playwright/test": "latest"
+    "@playwright/test": "latest",
+    "vitest": "latest"
   }
 }
