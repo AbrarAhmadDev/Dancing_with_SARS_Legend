@@ -1,18 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Play, Pause, RotateCcw, Waves, Satellite, Database, ShieldCheck } from 'lucide-react';
 import { frames } from './data';
 import './styles.css';
+import './raster.css';
 
-function FloodMap({ intensity }) {
-  const cells = useMemo(() => Array.from({ length: 120 }, (_, i) => {
-    const x = i % 15, y = Math.floor(i / 15);
-    const river = Math.abs(y - (7 + Math.sin(x / 2) * 2)) < 1.8;
-    const flood = river || (intensity > 45 && ((x * 7 + y * 13) % 100) < intensity * 0.72);
-    return { x, y, flood };
-  }), [intensity]);
-  return <div className="map" role="img" aria-label={`Flood extent visualization at ${intensity}% intensity`}>
-    <div className="map-grid">{cells.map((c, i) => <span key={i} className={c.flood ? 'cell flood' : 'cell'} />)}</div>
+function FloodMap({ frame }) {
+  return <div className="map" role="img" aria-label={`${frame.label} flood extent from NASA OPERA`}>
+    <img className="raster" src={frame.image} alt="" />
     <div className="map-label"><span className="legend-dot flood-dot" /> detected surface water</div>
     <div className="map-coordinates">DEMO AOI · 10 m equivalent display</div>
   </div>;
@@ -50,8 +45,8 @@ function App() {
     <section className="dashboard">
       <div className="dash-head"><div><div className="eyebrow">EVENT TIMELINE</div><h2>Flood pulse · lower valley</h2></div><div className="source"><Satellite size={16} /> SAR change detection</div></div>
       <div className="timeline"><div className="timeline-line" style={{ width: `${(index / (frames.length - 1)) * 100}%` }} />{frames.map((item, i) => <button key={item.date} className={`tick ${i === index ? 'active' : ''}`} onClick={() => { setPlaying(false); setIndex(i); }}><span className="tick-dot" /><small>{item.date.slice(5)}</small><b>{item.label}</b></button>)}</div>
-      <div className="visual-grid"><FloodMap intensity={frame.area} /><aside className="metrics"><div className="metric-kicker">CURRENT OBSERVATION</div><h3>{frame.label}</h3><p>{frame.note}</p><div className="metric"><span>Surface water extent</span><strong>{frame.area}<small>%</small></strong><div className="bar"><i style={{ width: `${frame.area}%` }} /></div></div><div className="metric"><span>7-day rainfall index</span><strong>{frame.rain}<small> / 100</small></strong><div className="bar warm"><i style={{ width: `${frame.rain}%` }} /></div></div><div className="callout"><ShieldCheck size={17} /><span>Observation gap policy: missing dates remain gaps; no synthetic image is presented as satellite evidence.</span></div></aside></div>
-      <div className="data-strip"><div><Database size={16} /><span><b>Demo mode</b> · deterministic placeholder frames</span></div><span>Production adapters: NISAR · Sentinel-1 · OPERA DSWx-S1</span></div>
+      <div className="visual-grid"><FloodMap frame={frame} /><aside className="metrics"><div className="metric-kicker">CURRENT OBSERVATION</div><h3>{frame.label}</h3><p>{frame.note}</p><div className="metric"><span>Source raster</span><strong>30<small> m</small></strong><div className="bar"><i style={{ width: '100%' }} /></div></div><div className="metric"><span>Sensor</span><strong>S1</strong><div className="bar warm"><i style={{ width: '100%' }} /></div></div><div className="callout"><ShieldCheck size={17} /><span>Observed NASA OPERA layer. Missing dates remain gaps; no synthetic image is presented as satellite evidence.</span></div></aside></div>
+      <div className="data-strip"><div><Database size={16} /><span><b>NASA OPERA</b> · Sentinel-1 DSWx-S1</span></div><span>Source preview · 30 m spatial resolution</span></div>
     </section>
     <footer><span>Built for “Dancing with the SARs”</span><span>NASA data will be credited per product metadata · <a href="https://nisar.jpl.nasa.gov/" target="_blank" rel="noreferrer">mission context</a></span></footer>
   </main>;
