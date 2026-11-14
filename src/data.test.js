@@ -6,6 +6,7 @@ describe('flood demo timeline', () => {
     expect(frames.length).toBeGreaterThanOrEqual(3);
     expect(frames.map((frame) => frame.date)).toEqual([...frames].sort((a, b) => a.date.localeCompare(b.date)).map((frame) => frame.date));
     expect(frames.every((frame) => frame.image.startsWith('/data/'))).toBe(true);
-    expect(frames.at(-1).label).toMatch(/Maximum/);
+    expect(frames.at(-1).label).toMatch(/Late-season/);
+    expect(frames.every((frame) => frame.sensor === 'NISAR')).toBe(true);
   });
 });

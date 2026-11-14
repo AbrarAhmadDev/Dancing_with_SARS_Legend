@@ -10,6 +10,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "validate:data": "node scripts/validate-catalog.mjs",
+    "fetch:pakistan-coverage": "node scripts/fetch-pakistan-coverage.mjs",
+    "validate:pakistan-coverage": "node scripts/validate-pakistan-coverage.mjs",
     "fetch:opera": "node scripts/fetch-opera-metadata.mjs",
     "validate:ingestion": "node scripts/validate-ingestion.mjs"
   },

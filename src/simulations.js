@@ -1,31 +1,31 @@
-import { frames } from './data';
+import { brazilFrames, pakistanFrames } from './data';
 
 export const simulations = [
   {
-    id: 'combined-event',
-    title: 'Combined event',
-    subtitle: 'HLS + Sentinel-1 observations',
-    description: 'The complete local case file, from baseline water through the maximum observed extent.',
-    frames,
-    source: 'NASA OPERA DSWx',
+    id: 'indus-delta-nisar',
+    title: 'Indus Delta pulse',
+    subtitle: 'NISAR L-band repeat passes',
+    description: 'Three real NISAR GCOV browse scenes across the 2026 monsoon window, bundled for local comparison.',
+    frames: pakistanFrames,
+    source: 'NASA NISAR L2 GCOV',
     accent: 'purple'
   },
   {
-    id: 'optical-first-look',
-    title: 'Optical first-look',
-    subtitle: 'Cloud-aware HLS passes',
-    description: 'Two optical observations that establish the early event context before radar confirmation.',
-    frames: frames.filter((frame) => frame.product === 'DSWx-HLS'),
-    source: 'NASA OPERA DSWx-HLS',
+    id: 'pakistan-coverage-atlas',
+    title: 'Pakistan coverage atlas',
+    subtitle: 'Four AOIs · 2026 coverage audit',
+    description: 'A judge-facing case file anchored to confirmed NISAR coverage in Pakistan; new AOIs can be added from the catalog.',
+    frames: pakistanFrames,
+    source: 'NASA CMR / ASF Vertex',
     accent: 'teal'
   },
   {
-    id: 'radar-confirmation',
-    title: 'Radar confirmation',
-    subtitle: 'Sentinel-1 passes',
-    description: 'Radar observations selected for dependable change detection through cloud cover.',
-    frames: frames.filter((frame) => frame.product === 'DSWx-S1'),
-    source: 'NASA OPERA DSWx-S1',
+    id: 'brazil-water-fallback',
+    title: 'Historical flood fallback',
+    subtitle: 'OPERA DSWx-S1 water masks',
+    description: 'A labeled Sentinel-1/OPERA flood case used to demonstrate historical surface-water mapping before Pakistan NISAR scenes.',
+    frames: brazilFrames,
+    source: 'NASA OPERA DSWx',
     accent: 'orange'
   }
 ];

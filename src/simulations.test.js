@@ -8,6 +8,6 @@ describe('local simulation catalog', () => {
   });
 
   it('falls back to the combined event for an unknown selection', () => {
-    expect(getSimulation('missing').id).toBe('combined-event');
+    expect(getSimulation('missing').id).toBe('indus-delta-nisar');
   });
 });
