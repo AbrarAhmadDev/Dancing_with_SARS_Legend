@@ -1,0 +1,69 @@
+/* Pakistan-first visual system: map-led, legible, and evidence-forward. */
+.app-shell{max-width:1520px;background:linear-gradient(180deg,rgba(8,20,33,.38),rgba(7,17,31,0) 38%)}
+.app-nav{height:66px;background:rgba(5,14,24,.72);backdrop-filter:blur(14px)}
+.site-header{padding-top:58px;padding-bottom:38px}
+.site-header h1{font-size:clamp(50px,6.5vw,88px);max-width:720px}
+.site-header p{font-size:15px;max-width:670px}
+.header-context{background:linear-gradient(145deg,#0e2637,#0a1724);border:1px solid #2d5265;border-left:3px solid var(--teal);border-radius:12px;padding:18px 20px;min-width:290px;box-shadow:0 18px 38px #02091355}
+.tab-shell{position:sticky;top:0;z-index:10;background:#07111fee;backdrop-filter:blur(14px)}
+.tab-list{max-width:720px}
+.tab-button{padding:16px 21px;border-radius:8px 8px 0 0}
+.tab-button.is-active{background:#12283b;color:#fff;border-bottom-color:var(--teal);box-shadow:inset 0 -1px 0 var(--teal)}
+.content-section{padding-top:34px}
+.section-heading h2{font-size:36px}
+.pakistan-atlas{background:linear-gradient(145deg,#0d2433,#091620 68%);border-color:#315468;border-radius:18px;padding:22px;box-shadow:0 20px 60px #00000026}
+.atlas-heading{align-items:center}
+.atlas-heading h3{font-size:26px;letter-spacing:-.04em}
+.atlas-heading p{font-size:13px;max-width:760px}
+.atlas-status{background:#081520aa;border:1px solid #315468;border-radius:999px;padding:9px 12px}
+.atlas-map-wrap{height:430px;border-radius:14px;background:#071522;box-shadow:inset 0 0 70px #020911aa}
+.atlas-map-wrap:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,21,34,.82),rgba(7,21,34,.18) 42%,rgba(6,16,26,.6)),url('/data/pakistan/pakistan-context-2026-10-17.jpg') center/cover;opacity:.48;filter:saturate(.8) contrast(1.1);pointer-events:none}
+.pakistan-map{position:relative;z-index:1;height:430px;filter:drop-shadow(0 10px 20px #02091188)}
+.pakistan-outline{fill:#1d5f7299;stroke:#b5fff7;stroke-width:2.6;paint-order:stroke;vector-effect:non-scaling-stroke}
+.hotspot-halo{stroke-width:1.8;opacity:.95}
+.hotspot-dot{stroke:#06111c;stroke-width:2.5}
+.hotspot text{font-size:11px;font-weight:500}
+.atlas-legend{z-index:2;background:#06111ddd;border:1px solid #315468;box-shadow:0 8px 24px #0005}
+.atlas-selection{position:relative;z-index:2;background:#071522dd;margin:0 -4px -4px;padding:16px 12px 4px;border-top:1px solid #234354}
+.atlas-selection strong{font-size:20px}
+.atlas-badge{border-radius:999px;padding:8px 12px}
+.mission-layout{grid-template-columns:292px minmax(0,1fr);gap:20px}
+.workspace-sidebar{background:linear-gradient(160deg,#0d2130,#091620);box-shadow:0 16px 40px #00000022}
+.selected-investigation{display:flex;align-items:flex-start;gap:10px;background:#122b3d;border:1px solid #2c5569;border-radius:10px;padding:12px}
+.selected-investigation strong{display:block;font-size:15px}
+.selected-investigation small{display:block;color:var(--muted);font-size:11px;line-height:1.35;margin-top:4px}
+.investigation-dot{width:10px;height:10px;border-radius:50%;margin-top:4px;flex:none;box-shadow:0 0 14px currentColor}
+.investigation-dot.wetland{background:#75e1a0;color:#75e1a0}.investigation-dot.water{background:#56a7ff;color:#56a7ff}.investigation-dot.forest{background:#c6ee79;color:#c6ee79}.investigation-dot.urban{background:#ffb56b;color:#ffb56b}
+.workspace-main{background:rgba(8,19,30,.35);border-radius:16px}
+.workspace-map-heading{font-size:12px;padding:9px 5px 12px;color:#b8ced7}.workspace-map-heading b{color:#fff}
+.workspace-main>.interactive-map{min-height:500px;border-color:#3a6171;border-radius:16px;box-shadow:0 16px 42px #00000036}
+.map-viewport{inset:0}
+.map-context{opacity:.7;filter:saturate(.88) contrast(1.12) brightness(.72)}
+.interactive-map .raster{mix-blend-mode:screen;filter:saturate(.78) contrast(1.06) brightness(.78);opacity:.74}
+.map-vignette{background:linear-gradient(135deg,#06111d99,#0b213022 52%,#060c15aa)}
+.map-tools button{background:#071726ee;border-color:#537786}
+.map-label{bottom:17px;background:#06131fdd;border:1px solid #365767;border-radius:999px;padding:8px 10px}
+.map-coordinates{background:#06131fdd;padding:8px;border-radius:6px}
+.timeline-wrap{padding:24px 4px 0}
+.timeline-range{height:5px}
+.signal-rail{background:linear-gradient(180deg,#0f2534,#0a1825);border-color:#315468;box-shadow:0 14px 32px #00000020}
+.signal-line:before{background:linear-gradient(90deg,#56a7ff,#c77dff,#75e1a0)}
+.coverage-panel{min-height:500px;background:linear-gradient(145deg,#0b1c2a,#07131f);border:1px solid #315468;border-radius:16px;overflow:hidden;box-shadow:0 16px 42px #00000036}
+.coverage-image{position:relative;height:290px;overflow:hidden;border-bottom:1px solid #315468;background:#07131f}
+.coverage-image img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.78) contrast(1.12) brightness(.72)}
+.coverage-image-wash{position:absolute;inset:0;background:linear-gradient(90deg,#07131fcc,#07131f44 55%,#07131faa)}
+.coverage-pins{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;background:#07131fe8;border:1px solid #84c9c7;border-radius:999px;padding:8px 13px;box-shadow:0 0 0 8px #07131f44,0 0 30px #8ed9d099}
+.coverage-pin{width:12px;height:12px;border-radius:50%;background:#56a7ff;box-shadow:0 0 16px #56a7ff}.coverage-pin.forest{background:#c6ee79;box-shadow:0 0 16px #c6ee79}.coverage-pin.urban{background:#ffb56b;box-shadow:0 0 16px #ffb56b}
+.coverage-pin-label{font:11px 'DM Mono';color:#dffbfa;white-space:nowrap}
+.coverage-source{position:absolute;left:16px;bottom:14px;color:#b9ced7;font:9px 'DM Mono';letter-spacing:.08em;background:#06131fdd;padding:7px 9px;border-radius:5px}
+.coverage-copy{padding:24px 26px}
+.coverage-state-label{font:10px 'DM Mono';letter-spacing:.14em;color:#ffbd79}.coverage-state-label.confirmed{color:#8dbbff}
+.coverage-copy h3{font-size:30px;letter-spacing:-.05em;margin:10px 0 7px}.coverage-copy p{color:var(--muted);line-height:1.55;max-width:700px;margin:0}
+.coverage-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.coverage-stats div{background:#0d2434;border:1px solid #294a5d;border-radius:9px;padding:12px}.coverage-stats strong{display:block;font-size:22px;color:#e9fbff}.coverage-stats span{display:block;color:var(--faint);font:9px 'DM Mono';margin-top:4px}
+.coverage-next{display:flex;gap:9px;align-items:flex-start;border-top:1px solid #294a5d;padding-top:15px;color:#a9cbd0;font-size:11px;line-height:1.45}.coverage-next svg{color:var(--teal);flex:none}.coverage-next b{color:#e9fbff}
+.signal-cards{gap:16px}.signal-card{background:linear-gradient(145deg,#0d2231,#091721);border-color:#2c4e60;min-height:140px}
+.quiz-layout{background:linear-gradient(145deg,#0e2432,#091620);box-shadow:0 18px 48px #0003}
+.quiz-images figure{background:#06131f;border-color:#3b6070}.quiz-images img{height:190px;filter:saturate(.92) contrast(1.06)}
+.quiz-theme.forest{color:#c6ee79}
+@media(max-width:850px){.atlas-map-wrap,.pakistan-map{height:350px}.coverage-image{height:230px}}
+@media(max-width:560px){.atlas-map-wrap,.pakistan-map{height:300px}.coverage-stats{grid-template-columns:1fr 1fr}.coverage-stats div:last-child{grid-column:span 2}.coverage-copy{padding:20px}.coverage-image{height:210px}.workspace-main>.interactive-map{min-height:360px}}
