@@ -19,7 +19,13 @@ jobs:
           cache: npm
       - run: npm install
       - run: npm run build
-      - run: npx vercel deploy --prod --token "$VERCEL_TOKEN" --yes
+      - name: Deploy when Vercel credentials are configured
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "Vercel deployment skipped: configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID in the production environment."
+            exit 0
+          fi
+          npx vercel deploy --prod --token "$VERCEL_TOKEN" --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
