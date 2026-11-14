@@ -51,6 +51,24 @@ Each phase must pass its test checklist before the next phase begins.
 
 - With no Supabase variables, the app remains usable using the real local OPERA previews.
 - With `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, observations are queried by event slug.
+
+## Environment setup
+
+1. Copy the local template if needed: `cp .env.example .env.local`.
+2. In Supabase, open **Project Settings → Data API** and copy the Project URL into `VITE_SUPABASE_URL`.
+3. Copy the browser-safe **anon/public** key into `VITE_SUPABASE_ANON_KEY`. Never use a Supabase service-role key in a `VITE_` variable.
+4. Keep `NASA_EARTHDATA_USERNAME`, `NASA_EARTHDATA_PASSWORD`, and `FIRMS_MAP_KEY` for server-side ingestion scripts only. They are currently optional for the static dashboard.
+5. Run `npm run dev` and verify the app locally.
+
+### GitHub Actions → Vercel secrets
+
+For the production deployment workflow, add these as repository or `production` environment secrets in GitHub (**Settings → Secrets and variables → Actions → New repository secret**):
+
+- `VERCEL_TOKEN`: create a Vercel access token under **Account Settings → Tokens**.
+- `VERCEL_ORG_ID`: the Vercel team/owner ID.
+- `VERCEL_PROJECT_ID`: the project ID from Vercel project settings.
+
+Do not paste these tokens into chat, source files, commits, screenshots, or browser-visible `VITE_` variables. If a token is ever exposed, revoke it and create a replacement immediately.
 - No service-role key is accepted by the frontend.
 
 ## Deployment authentication
