@@ -8,6 +8,7 @@ import './styles.css';
 import './raster.css';
 import './earth-map.css';
 import './dashboard.css';
+import './mission.css';
 
 const tabs = [
   { id: 'explore', label: 'Explore', icon: MapIcon },
@@ -20,21 +21,22 @@ function daysBetween(start, end) {
   return Math.round((new Date(end) - new Date(start)) / 86400000);
 }
 
-function InteractiveMap({ frame, compact = false }) {
-  const [zoom, setZoom] = useState(1);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+function InteractiveMap({ frame, compact = false, layerOpacity = 1, showContext = true, sharedView, onViewChange }) {
+  const [localView, setLocalView] = useState({ zoom: 1, offset: { x: 0, y: 0 } });
   const [drag, setDrag] = useState(null);
+  const view = sharedView ?? localView;
 
-  useEffect(() => { setZoom(1); setOffset({ x: 0, y: 0 }); }, [frame.image]);
-  function onPointerDown(event) { event.currentTarget.setPointerCapture(event.pointerId); setDrag({ x: event.clientX - offset.x, y: event.clientY - offset.y }); }
-  function onPointerMove(event) { if (drag) setOffset({ x: event.clientX - drag.x, y: event.clientY - drag.y }); }
-  function onWheel(event) { event.preventDefault(); setZoom((value) => Math.min(2.6, Math.max(1, value + (event.deltaY < 0 ? 0.12 : -0.12)))); }
-  function resetView() { setZoom(1); setOffset({ x: 0, y: 0 }); }
+  useEffect(() => { if (!sharedView) setLocalView({ zoom: 1, offset: { x: 0, y: 0 } }); }, [frame.image, sharedView]);
+  function updateView(next) { if (onViewChange) onViewChange(next); else setLocalView(next); }
+  function onPointerDown(event) { event.currentTarget.setPointerCapture(event.pointerId); setDrag({ x: event.clientX - view.offset.x, y: event.clientY - view.offset.y }); }
+  function onPointerMove(event) { if (drag) updateView({ ...view, offset: { x: event.clientX - drag.x, y: event.clientY - drag.y } }); }
+  function onWheel(event) { event.preventDefault(); updateView({ ...view, zoom: Math.min(2.6, Math.max(1, view.zoom + (event.deltaY < 0 ? 0.12 : -0.12))) }); }
+  function resetView() { updateView({ zoom: 1, offset: { x: 0, y: 0 } }); }
 
   return <div className={`interactive-map ${compact ? 'compact-map' : ''}`} role="img" aria-label={`${frame.label} flood extent from NASA OPERA`} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={() => setDrag(null)} onPointerCancel={() => setDrag(null)} onWheel={onWheel}>
-    <div className="map-viewport" style={{ transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})` }}>
-      <img className="map-context" src={frame.texture} alt="" draggable="false" />
-      <img className="raster" src={frame.image} alt="" draggable="false" />
+    <div className="map-viewport" style={{ transform: `translate(${view.offset.x}px, ${view.offset.y}px) scale(${view.zoom})` }}>
+      <img className="map-context" src={frame.texture} alt="" draggable="false" style={{ opacity: showContext ? undefined : 0 }} />
+      <img className="raster" src={frame.image} alt="" draggable="false" style={{ opacity: layerOpacity }} />
     </div>
     <div className="map-vignette" />
     <div className="map-tools" aria-label="Map controls">
@@ -60,11 +62,18 @@ function Timeline({ timeline, index, setIndex }) {
 
 function Explore({ simulation, setTab }) {
   const [index, setIndex] = useState(0);
+  const [opacity, setOpacity] = useState(0.9);
+  const [showContext, setShowContext] = useState(true);
   const timeline = simulation.frames;
   const frame = timeline[index] ?? timeline[0];
+  function downloadTimeline() {
+    const csv = ['date,label,product,sensor,note', ...timeline.map((item) => [item.date, item.label, item.product, item.sensor, item.note].map((value) => `"${String(value).replaceAll('"', '""')}"`).join(','))].join('\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    const link = document.createElement('a'); link.href = url; link.download = `${simulation.id}-observations.csv`; link.click(); URL.revokeObjectURL(url);
+  }
   return <section className="content-section">
-    <div className="section-heading"><div><span className="eyebrow">01 / EXPLORE</span><h2>Follow the water footprint</h2><p>Move through actual observation dates. Drag the map to inspect the landscape and zoom into the purple water mask.</p></div><div className="cache-pill"><span /> Locally cached · {timeline.length} frames</div></div>
-    <div className="explore-grid"><div><InteractiveMap frame={frame} /><Timeline timeline={timeline} index={index} setIndex={setIndex} /></div><aside className="insight-panel"><div className="panel-kicker">CURRENT OBSERVATION</div><h3>{frame.label}</h3><p aria-live="polite">{frame.note}</p><dl className="facts"><div><dt>Acquired</dt><dd>{frame.date}</dd></div><div><dt>Product</dt><dd>{frame.product}</dd></div><div><dt>Sensor</dt><dd>{frame.sensor}</dd></div><div><dt>Resolution</dt><dd>30 m</dd></div></dl><div className="trust-note"><ShieldCheck size={16} /><span>Observed NASA OPERA layer. No missing date has been filled with synthetic satellite evidence.</span></div><button className="text-button" type="button" onClick={() => setTab('compare')}>Open side-by-side comparison <ChevronRight size={15} /></button></aside></div>
+    <div className="section-heading"><div><span className="eyebrow">01 / EXPLORE</span><h2>The observation desk</h2><p>A focused workspace for reading flood evidence: context, water mask, date, and sensor stay visible together.</p></div><div className="cache-pill"><span /> Locally cached · {timeline.length} frames</div></div>
+    <div className="mission-layout"><aside className="workspace-sidebar"><div className="workspace-kicker">WHAT TO LOOK FOR</div><div className="look-item"><span className="look-icon water">≈</span><div><strong>Surface-water footprint</strong><p>Follow the purple mask as it appears across the available passes.</p></div></div><div className="look-item"><span className="look-icon radar">⌁</span><div><strong>Sensor handoff</strong><p>HLS gives optical context; Sentinel-1 confirms radar-observed water.</p></div></div><div className="look-item"><span className="look-icon gap">∥</span><div><strong>Real acquisition gaps</strong><p>Empty time between points is part of the scientific story.</p></div></div><div className="workspace-divider" /><div className="workspace-kicker">LAYER CONTROLS</div><label className="control-row"><span>Water mask opacity <b>{Math.round(opacity * 100)}%</b></span><input type="range" min="0.2" max="1" step="0.05" value={opacity} onChange={(event) => setOpacity(Number(event.target.value))} /></label><label className="toggle-row"><input type="checkbox" checked={showContext} onChange={(event) => setShowContext(event.target.checked)} /><span>Show map context</span></label><button className="download-button" type="button" onClick={downloadTimeline}><Database size={14} /> Download change data (CSV)</button><div className="workspace-divider" /><div className="workspace-kicker">CURRENT OBSERVATION</div><strong className="current-title" aria-live="polite">{frame.label}</strong><div className="current-meta">{frame.date} · {frame.product} · {frame.sensor}</div><button className="text-button" type="button" onClick={() => setTab('compare')}>Open synchronized compare <ChevronRight size={15} /></button></aside><div className="workspace-main"><div className="workspace-map-heading"><span>{simulation.title} · {simulation.subtitle}</span><span className="map-aoi">SOUTHERN BRAZIL · OPERA AOI</span></div><InteractiveMap frame={frame} layerOpacity={opacity} showContext={showContext} /><Timeline timeline={timeline} index={index} setIndex={setIndex} /><div className="signal-rail"><div className="signal-heading"><span><Satellite size={14} /> Observation ledger</span><span>Evidence over time</span></div><div className="signal-line">{timeline.map((item, itemIndex) => <button type="button" className={itemIndex === index ? 'is-active' : ''} key={`${item.date}-${item.label}`} onClick={() => setIndex(itemIndex)}><i /><span>{item.date.slice(5)}</span><b>{item.sensor}</b></button>)}</div><div className="signal-caption">{frame.note} · {frame.product} · 30 m source preview</div></div></div></div>
   </section>;
 }
 
@@ -80,9 +89,10 @@ function Compare({ simulation }) {
   const timeline = simulation.frames;
   const [leftIndex, setLeftIndex] = useState(0);
   const [rightIndex, setRightIndex] = useState(Math.max(timeline.length - 1, 0));
+  const [sharedView, setSharedView] = useState({ zoom: 1, offset: { x: 0, y: 0 } });
   const left = timeline[leftIndex] ?? timeline[0];
   const right = timeline[rightIndex] ?? timeline[0];
-  return <section className="content-section"><div className="section-heading"><div><span className="eyebrow">03 / COMPARE</span><h2>See the same area at two moments</h2><p>Start and end are selected by default. Change either date to study how the observed footprint shifts.</p></div><div className="compare-span"><ArrowLeftRight size={16} /> {daysBetween(left.date, right.date)} days apart</div></div><div className="compare-controls"><FramePicker label="Earlier observation" frames={timeline} value={leftIndex} onChange={setLeftIndex} /><FramePicker label="Later observation" frames={timeline} value={rightIndex} onChange={setRightIndex} /></div><div className="compare-grid"><div className="compare-panel"><div className="compare-title"><span>Earlier</span><strong>{left.date}</strong></div><InteractiveMap frame={left} compact /><p>{left.label} · {left.product} · {left.sensor}</p></div><div className="compare-panel"><div className="compare-title"><span>Later</span><strong>{right.date}</strong></div><InteractiveMap frame={right} compact /><p>{right.label} · {right.product} · {right.sensor}</p></div></div><div className="compare-foot"><span><i className="legend-square earlier" /> Earlier observation</span><span><i className="legend-square later" /> Later observation</span><span>Same AOI · {simulation.title}</span></div></section>;
+  return <section className="content-section"><div className="section-heading"><div><span className="eyebrow">03 / COMPARE</span><h2>Two dates. One synchronized view.</h2><p>Both maps share pan and zoom, so the same riverbanks and flood channels stay aligned while you move through time.</p></div><div className="compare-span"><ArrowLeftRight size={16} /> {daysBetween(left.date, right.date)} days apart</div></div><div className="compare-controls"><FramePicker label="Earlier observation" frames={timeline} value={leftIndex} onChange={setLeftIndex} /><FramePicker label="Later observation" frames={timeline} value={rightIndex} onChange={setRightIndex} /></div><div className="sync-banner"><ArrowLeftRight size={15} /> Synchronized dual view · drag or zoom either map</div><div className="compare-grid"><div className="compare-panel"><div className="compare-title"><span>EARLIER · {left.date}</span><strong>{left.label}</strong></div><InteractiveMap frame={left} compact sharedView={sharedView} onViewChange={setSharedView} /><p>{left.product} · {left.sensor}</p></div><div className="compare-panel"><div className="compare-title"><span>LATER · {right.date}</span><strong>{right.label}</strong></div><InteractiveMap frame={right} compact sharedView={sharedView} onViewChange={setSharedView} /><p>{right.product} · {right.sensor}</p></div></div><div className="compare-foot"><span><i className="legend-square earlier" /> Earlier observation</span><span><i className="legend-square later" /> Later observation</span><span>Same AOI · {simulation.title}</span></div></section>;
 }
 
 const quizQuestions = [
