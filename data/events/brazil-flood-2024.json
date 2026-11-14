@@ -1,0 +1,27 @@
+{
+  "slug": "brazil-flood-2024",
+  "title": "Brazil Flood — May 2024",
+  "region": "Rio Grande do Sul, Brazil",
+  "eventType": "flood",
+  "source": {
+    "provider": "NASA ARIA/OPERA",
+    "sensor": "Sentinel-1",
+    "product": "OPERA Dynamic Surface Water Extent (DSWx-S1)",
+    "resolutionMeters": 30,
+    "temporalResolution": "sub-daily to bi-weekly",
+    "serviceUrl": "https://gis.earthdata.nasa.gov/portal/rest/services/DISASTERS_EX2602_202405_FLOOD_BRAZIL/EX2602_opera_dswx_s1/MapServer",
+    "sourcePage": "https://gis.earthdata.nasa.gov/portal/home/item.html?id=3ddbac5d9d1141639d1d6b81f651274b",
+    "licenseNote": "Modified Copernicus Sentinel data processed by ESA and analyzed by NASA-JPL/Caltech ARIA/OPERA. Preserve source attribution and product metadata."
+  },
+  "observations": [
+    { "observedAt": "2024-05-08T22:06:00Z", "role": "flood-observation" },
+    { "observedAt": "2024-05-11T08:49:00Z", "role": "flood-observation" }
+  ],
+  "quality": {
+    "status": "preliminary",
+    "limitations": [
+      "Water classification can be affected by terrain, vegetation, wind, and radar geometry.",
+      "This event layer is an observed surface-water product, not a flood-probability model."
+    ]
+  }
+}

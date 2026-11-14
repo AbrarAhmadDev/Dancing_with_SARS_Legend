@@ -12,6 +12,7 @@ This repository contains the first safe prototype for the NASA Space Apps “Dan
 - Supabase observation schema ready for NISAR, Sentinel-1, and OPERA DSWx-S1 ingestion.
 - GitHub Actions build verification.
 - Deployment workflow gated on a successful CI run; it requires `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` GitHub Actions secrets.
+- Phase 1 catalog entry for the NASA ARIA/OPERA Brazil flood event, with validation of source and observation metadata.
 
 ## Run locally
 
@@ -31,6 +32,12 @@ npm run dev
 7. Deployment: GitHub Actions gates builds before Vercel deployment.
 
 Each phase must pass its test checklist before the next phase begins.
+
+### Phase 1 test gate
+
+- `npm run validate:data` passes.
+- Every event has HTTPS source metadata, sensor, product, resolution, dates, and limitations.
+- No imagery is treated as observed until the ingestion phase downloads and records the source asset.
 
 ## Deployment authentication
 
