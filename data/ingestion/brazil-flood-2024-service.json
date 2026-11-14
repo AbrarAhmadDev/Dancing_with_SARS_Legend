@@ -1,0 +1,40 @@
+{
+  "fetchedAt": "2026-11-14T18:12:32.083Z",
+  "serviceUrl": "https://gis.earthdata.nasa.gov/portal/rest/services/DISASTERS_EX2602_202405_FLOOD_BRAZIL/EX2602_opera_dswx_s1/MapServer?f=json",
+  "provider": "NASA ARIA/OPERA",
+  "sensor": "Sentinel-1",
+  "product": "OPERA Dynamic Surface Water Extent (DSWx-S1)",
+  "spatialReference": {
+    "falseM": -100000,
+    "xyTolerance": 0.001,
+    "mUnits": 10000,
+    "zUnits": 10000,
+    "latestWkid": 32722,
+    "zTolerance": 0.001,
+    "wkid": 32722,
+    "xyUnits": 10000,
+    "mTolerance": 0.001,
+    "falseX": -5120900,
+    "falseY": 1900,
+    "falseZ": -100000
+  },
+  "layers": [
+    {
+      "id": 0,
+      "name": "Max Extent (May 8, 2024-May 11,2024)"
+    },
+    {
+      "id": 1,
+      "name": "Surface Water Extent"
+    },
+    {
+      "id": 2,
+      "name": "May 11, 2024"
+    },
+    {
+      "id": 3,
+      "name": "May 8, 2024"
+    }
+  ],
+  "rawDescription": "Dates of Images:20240508T2206, 20240511T0849 (GMT) (YYYYMMDD: HHMM)Summary:The Advanced Rapid Imaging and Analysis (ARIA) and Observational Products for End-Users from Remote Sensing Analysis (OPERA) teams at the Jet Propulsion Laboratory, California Institute of Technology produced flood mapping products using the OPERA Dynamic Surface Water Extent from Sentinel-1 (DSWx-S1) dataset. These products provide a rapid assessment of surface water extent to support emergency response and situational awareness during flood events.The dataset provided includes two products:Surface Water Extent maps on individual datesMaximum Surface Water Extent maps, showing the full extent of water observed over a defined time periodDates and Input Data:Flood images: May 08, 2024 and May 11, 2024Products are generated from OPERA DSWx-S1 satellite imagery and mosaicked across tiles to provide continuous coverage.Product Description:Surface water is identified from Synthetic Aperture Radar (SAR) satellite imagery and mapped at 30 m spatial resolution. Maximum Surface Water Extent maps show all locations where water was detected at any time during the analysis period.Caveats and Limitations:Detecting inundation under vegetation, in the urban perimeter, in arid environments, and along water body edges is known to be challenging. The local accuracy of the flood maps in such environments may be impacted. These results are intended to support rapid emergency response.  All information is provisional for use under emergency response guidelines. These data are provided with absolutely no warranty of any kind.  Use at your own risk.Suggested Use:The OPERA DSWx-S1 Water product classifies the Sentinel-1 (S1) input imagery into &quot;not water&quot;, &quot;open surface water&quot;, and &quot;inundated vegetation”, masks include Height Above Nearest Drainage (HAND) mask and layover/shadow mask), or no data classes.Water (WTR) Layer Values:File names: OPERA_L3_DSWX-S1_V1_WTR_20240508T2206_mosaic.tif, OPERA_L3_DSWX-S1_V1_WTR_20240511T0849_mosaic.tifWater (WTR) Layer Values:0: Not Water - an area with valid data that is not open water (class 1), inundated vegetation (class 3), height above nearest drainage masked (class 250), or layover/shadow masked (class 251) (suggested color: #ffffff)1: Open Water - an area that is entirely water and unobstructed to the sensor, including obstructions by vegetation, terrain, and buildings. (suggested color: #0000ff)3: Inundated vegetation - an area that is considered inundated, extracted from the high value in dual polarization ratio and the wetland class in land cover map. (suggested color: #00ff00)250: Height Above Nearest Drainage (HAND) masked - an area where topographic height is higher than the HAND threshold (suggested color: #c8c8c8)251: Layover/shadow masked - an area identified as layover or shadow computed from the geometry of the digital elevation model and sensor. The area is directly copied from input burst RTC-S1 products (suggested color: #808080)255: No data (suggested color: transparent)Maximum Water Extent Layer Values:The maximum water extent observed during the event was created by aggregating OPERA DSWx-S1 water products.File names: ARIA-OPERA_L3_DSWX-S1_V1_WTR_20240508T2206_20240511T0849_max_extent.tif0: Not Water. No water was detected within the time period of the images. Masked pixels are set to No data. (suggested color: #ffffff)1: Water - an area where open water or inundated vegetation was detected during the time period of the images. (suggested color: #ff15e4)Satellite/Sensor/Resolution:Satellite/Sensor: Synthetic Aperture Radar (SAR) instrument on European Space Agency's (ESA) Sentinel-1A/C satellites.Spatial Resolution: 30 metersTemporal Resolution: sub-daily to bi-weeklyCredits:The product contains modified Copernicus Sentinel data, processed by the European Space Agency and analyzed by the NASA-JPL/Caltech ARIA/OPERA team. The DSWx products are produced as part of the OPERA project, which is funded by NASA to address remote sensing needs identified by the Satellite Needs Working Group, and managed by NASA's Jet Propulsion Laboratory.Product POCs:Cole Speed (cole.speed@jpl.nasa.gov)Mary Grace Bato (bato@jpl.nasa.gov)Emre Havazli (emre.havazli@jpl.nasa.gov) Renato Frasson (renato.prata.de.moraes.frasson@jpl.nasa.gov) Alexander Handwerger (alexander.handwerger@jpl.nasa.gov )Esri REST Endpoint:See URL to the bottom right.WMS Endpoint:https://gis.earthdata.nasa.gov/gis05/services/DISASTERS_EX2602_202405_FLOOD_BRAZIL/EX2602_opera_dswx_s1/MapServer/WMSServer"
+}
