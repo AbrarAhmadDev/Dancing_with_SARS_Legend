@@ -1,4 +1,4 @@
-import { brazilFrames, pakistanFrames, pakistanWaterFrames } from './data';
+import { brazilFrames, pakistanFireFrames, pakistanFrames, pakistanThermalFrames, pakistanVegetationFrames, pakistanWaterFrames } from './data';
 
 export const simulations = [
   {
@@ -27,6 +27,33 @@ export const simulations = [
     frames: pakistanWaterFrames,
     source: 'NASA OPERA DSWx-S1',
     accent: 'teal'
+  },
+  {
+    id: 'pakistan-vegetation-pulse',
+    title: 'Green pulse across Pakistan',
+    subtitle: 'MODIS NDVI seasonal context',
+    description: 'Three real NASA vegetation-index scenes for reading crop, wetland, and forest seasonality without overclaiming tree loss.',
+    frames: pakistanVegetationFrames,
+    source: 'NASA GIBS / MODIS Terra',
+    accent: 'lime'
+  },
+  {
+    id: 'pakistan-thermal-field',
+    title: 'Heat field',
+    subtitle: 'MODIS daytime land-surface temperature',
+    description: 'A national thermal timeline for heat-stress context around cities, irrigated corridors, and drylands.',
+    frames: pakistanThermalFrames,
+    source: 'NASA GIBS / MODIS Terra',
+    accent: 'orange'
+  },
+  {
+    id: 'pakistan-fire-watch',
+    title: 'Thermal anomaly watch',
+    subtitle: 'VIIRS 375 m screening layer',
+    description: 'Two real VIIRS anomaly layers that let students inspect where thermal detections appear and why they need corroboration.',
+    frames: pakistanFireFrames,
+    source: 'NASA GIBS / VIIRS NOAA-20',
+    accent: 'red'
   },
   {
     id: 'brazil-water-fallback',
