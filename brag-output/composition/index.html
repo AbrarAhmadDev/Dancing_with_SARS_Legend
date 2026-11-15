@@ -1,0 +1,1235 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Dancing with the SARs — Flood Pulse Brag</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("assets/fonts/SpaceGrotesk.ttf") format("truetype");
+        font-weight: 100 700;
+        font-style: normal;
+        font-display: block;
+      }
+
+      :root {
+        --bg: #07111f;
+        --surface: #0a1620;
+        --ink: #e6eef2;
+        --muted: #8fa6b3;
+        --faint: #5f7684;
+        --line: #243846;
+        --teal: #6eb8ae;
+        --flood: #e6c65a;
+        --fire: #e07040;
+        --ok: #7fbe8f;
+        --font: "Space Grotesk", system-ui, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font);
+      }
+
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: radial-gradient(120% 90% at 70% 10%, #0f2433 0%, var(--bg) 55%);
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+
+      .scene-inner {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+      }
+
+      .desk-chrome {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 28px 40px 120px;
+      }
+
+      .topbar {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 22px;
+        flex-shrink: 0;
+      }
+
+      .brand-lock {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        letter-spacing: 0.14em;
+        font-size: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .brand-lock em {
+        color: var(--teal);
+        font-style: normal;
+        letter-spacing: 0.08em;
+      }
+
+      .nav-meta {
+        display: flex;
+        gap: 18px;
+        color: var(--faint);
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 18px;
+      }
+
+      .tab {
+        padding: 10px 16px;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .tab.is-active {
+        color: var(--ink);
+        border-color: var(--teal);
+        background: rgba(110, 184, 174, 0.1);
+      }
+
+      .panel {
+        flex: 1;
+        min-height: 0;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(10, 22, 32, 0.96), rgba(7, 17, 31, 0.98));
+        display: grid;
+        gap: 0;
+      }
+
+      .eyebrow {
+        color: var(--teal);
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .panel-head h2 {
+        font-size: 34px;
+        letter-spacing: -0.04em;
+        line-height: 1.05;
+        font-weight: 600;
+      }
+
+      .panel-head p {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 15px;
+        max-width: 56ch;
+        line-height: 1.45;
+      }
+
+      /* Scene 1 brand */
+      .hook {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 120px;
+        height: 100%;
+      }
+
+      .hook-kicker {
+        color: var(--teal);
+        letter-spacing: 0.22em;
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+      }
+
+      .hook h1 {
+        font-size: 78px;
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 0.96;
+        max-width: 14ch;
+      }
+
+      .hook h1 span {
+        color: var(--teal);
+      }
+
+      .hook-tag {
+        margin-top: 28px;
+        font-size: 24px;
+        color: var(--muted);
+        max-width: 28ch;
+        line-height: 1.35;
+      }
+
+      .hook-meta {
+        margin-top: 40px;
+        display: flex;
+        gap: 28px;
+        color: var(--faint);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .orbit-ring {
+        position: absolute;
+        right: -80px;
+        top: 120px;
+        width: 720px;
+        height: 720px;
+        border-radius: 50%;
+        border: 1px solid rgba(110, 184, 174, 0.18);
+        box-shadow: inset 0 0 80px rgba(110, 184, 174, 0.05);
+        opacity: 0.85;
+      }
+
+      .orbit-ring::after {
+        content: "";
+        position: absolute;
+        inset: 70px;
+        border-radius: 50%;
+        border: 1px dashed rgba(230, 198, 90, 0.2);
+      }
+
+      /* Atlas layout */
+      .atlas-grid {
+        grid-template-columns: 340px 1fr;
+        height: 100%;
+      }
+
+      .atlas-side {
+        border-right: 1px solid var(--line);
+        padding: 22px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .country-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        background: rgba(7, 17, 31, 0.7);
+      }
+
+      .country-btn.is-active {
+        border-color: var(--teal);
+        background: rgba(110, 184, 174, 0.08);
+      }
+
+      .swatch {
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+      }
+
+      .swatch.flood {
+        background: linear-gradient(135deg, #1f4d3a, #2278c8 55%, var(--flood));
+      }
+
+      .swatch.fire {
+        background: linear-gradient(135deg, #2a3a24, var(--fire) 60%, #674334);
+      }
+
+      .country-btn strong {
+        display: block;
+        font-size: 15px;
+      }
+
+      .country-btn small {
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .method-note {
+        margin-top: auto;
+        padding: 12px;
+        border-left: 2px solid var(--flood);
+        background: rgba(230, 198, 90, 0.06);
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .atlas-main {
+        padding: 18px 20px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .visual-top {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        min-height: 18px;
+      }
+
+      .mode-desc-wrap {
+        position: relative;
+        min-height: 62px;
+      }
+
+      .mode-desc-wrap .mode-desc {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+      }
+
+      .landscape {
+        position: relative;
+        flex: 1;
+        min-height: 320px;
+        border: 1px solid var(--line);
+        overflow: hidden;
+      }
+
+      .land-layer {
+        position: absolute;
+        inset: 0;
+      }
+
+      .land-flood {
+        background:
+          linear-gradient(180deg, rgba(10, 40, 48, 0.35), transparent 40%),
+          repeating-linear-gradient(
+            115deg,
+            rgba(73, 123, 64, 0.35) 0 18px,
+            rgba(39, 90, 70, 0.4) 18px 36px
+          ),
+          linear-gradient(160deg, #1b3a2e, #0d2230 60%, #14324a);
+      }
+
+      .land-fire {
+        opacity: 0;
+        background:
+          linear-gradient(160deg, #2a3a24, #3a2818 45%, #1a2030),
+          repeating-linear-gradient(
+            110deg,
+            rgba(224, 112, 64, 0.25) 0 16px,
+            rgba(103, 67, 52, 0.3) 16px 32px
+          );
+      }
+
+      .flood-band {
+        position: absolute;
+        left: -5%;
+        right: -5%;
+        top: 48%;
+        height: 26%;
+        background: linear-gradient(90deg, transparent, rgba(34, 137, 215, 0.55), rgba(230, 198, 90, 0.25), transparent);
+        opacity: 0.9;
+      }
+
+      .fire-embers {
+        position: absolute;
+        inset: 18% 12% 30% 40%;
+        background: radial-gradient(circle, rgba(224, 112, 64, 0.55), transparent 70%);
+        opacity: 0.85;
+      }
+
+      .landscape-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 6px 10px;
+        background: rgba(7, 17, 31, 0.82);
+        border: 1px solid var(--line);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+      }
+
+      .player-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn {
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--ink);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+      }
+
+      .btn.accent {
+        background: rgba(110, 184, 174, 0.16);
+        border-color: var(--teal);
+        color: var(--ink);
+      }
+
+      .btn.is-on {
+        border-color: var(--teal);
+        color: var(--teal);
+      }
+
+      .play-time {
+        margin-left: auto;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+        font-size: 13px;
+      }
+
+      .timeline {
+        height: 6px;
+        background: #132230;
+        border: 1px solid var(--line);
+        position: relative;
+      }
+
+      .timeline > i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 42%;
+        background: linear-gradient(90deg, var(--teal), var(--flood));
+      }
+
+      .ref-card {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 12px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        background: rgba(7, 17, 31, 0.65);
+      }
+
+      .ref-thumb {
+        height: 72px;
+        background: linear-gradient(135deg, #2a4a5c, #1a3040 40%, #4a6a3a);
+        border: 1px solid var(--line);
+      }
+
+      .ref-card small {
+        color: var(--teal);
+        letter-spacing: 0.1em;
+        font-size: 10px;
+      }
+
+      .ref-card strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 14px;
+      }
+
+      .ref-card p {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 4px;
+      }
+
+      /* Globe */
+      .globe-grid {
+        grid-template-columns: 1fr 380px;
+        height: 100%;
+      }
+
+      .globe-stage {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid var(--line);
+        background:
+          radial-gradient(circle at 50% 48%, rgba(40, 90, 120, 0.35), transparent 42%),
+          #061018;
+        overflow: hidden;
+      }
+
+      .globe-wrap {
+        position: relative;
+        width: 430px;
+        height: 430px;
+      }
+
+      .globe-ball {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        box-shadow:
+          inset -28px -18px 40px rgba(0, 0, 0, 0.45),
+          0 0 0 1px rgba(230, 238, 242, 0.12),
+          0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .globe-synced {
+        background:
+          radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.35), transparent 28%),
+          radial-gradient(circle at 60% 55%, #1f6f4a 0 18%, transparent 19%),
+          radial-gradient(circle at 35% 45%, #1a5a8a 0 22%, transparent 23%),
+          radial-gradient(circle at 70% 35%, #2f7a4a 0 12%, transparent 13%),
+          linear-gradient(160deg, #0b3d6b, #0a6b7a 45%, #0d4a38);
+      }
+
+      .globe-real {
+        opacity: 0;
+        background:
+          radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 26%),
+          radial-gradient(circle at 55% 50%, #1b8f55 0 16%, transparent 17%),
+          radial-gradient(circle at 40% 40%, #0d5f9e 0 28%, transparent 29%),
+          radial-gradient(circle at 72% 38%, #2d8a48 0 14%, transparent 15%),
+          linear-gradient(145deg, #083a68, #0a7a8a 50%, #0c5538);
+      }
+
+      .globe-white-bg {
+        position: absolute;
+        inset: 0;
+        background: #e8eef2;
+        opacity: 0;
+      }
+
+      .hover-tip {
+        position: absolute;
+        top: 28%;
+        left: 58%;
+        padding: 8px 12px;
+        background: rgba(7, 17, 31, 0.92);
+        border: 1px solid var(--teal);
+        font-size: 14px;
+        opacity: 0;
+        white-space: nowrap;
+      }
+
+      .globe-stage.is-white .hover-tip {
+        background: rgba(255, 255, 255, 0.95);
+        color: #0a1620;
+      }
+
+      .globe-side {
+        padding: 22px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .mode-row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .mode-row > span,
+      .check-row > span {
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .mode-btns {
+        display: flex;
+        gap: 8px;
+      }
+
+      .mode-btns .btn {
+        flex: 1;
+        text-align: center;
+      }
+
+      .check-row label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        font-size: 14px;
+      }
+
+      .check-box {
+        width: 18px;
+        height: 18px;
+        border: 1px solid var(--line);
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+        position: relative;
+      }
+
+      .check-mark {
+        opacity: 0;
+        color: var(--teal);
+        line-height: 1;
+      }
+
+      .mode-desc {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .sector-note {
+        margin-top: auto;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-left: 2px solid var(--fire);
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      /* Sources */
+      .sources-grid {
+        grid-template-rows: auto auto 1fr;
+        padding: 20px;
+        gap: 16px;
+      }
+
+      .sources-rail {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .endpoint {
+        padding: 16px;
+        border: 1px solid var(--line);
+        background: rgba(7, 17, 31, 0.55);
+      }
+
+      .endpoint .rail-label {
+        color: var(--teal);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+      }
+
+      .endpoint h3 {
+        margin-top: 8px;
+        font-size: 22px;
+        letter-spacing: -0.03em;
+      }
+
+      .endpoint p {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .sources-controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .catalog-panel {
+        border: 1px solid var(--line);
+        padding: 14px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .granule {
+        padding: 12px;
+        border: 1px solid var(--line);
+        background: rgba(10, 22, 32, 0.8);
+      }
+
+      .granule small {
+        color: var(--faint);
+        letter-spacing: 0.08em;
+        font-size: 11px;
+      }
+
+      .granule strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 14px;
+      }
+
+      .honesty-banner {
+        grid-column: 1 / -1;
+        margin-top: 4px;
+        padding: 12px 14px;
+        border-left: 2px solid var(--teal);
+        background: rgba(110, 184, 174, 0.08);
+        color: var(--ink);
+        font-size: 14px;
+      }
+
+      /* Honesty scene */
+      .honesty-panel {
+        padding: 40px 48px;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 28px;
+        align-items: center;
+      }
+
+      .honesty-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .honesty-list li {
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        background: rgba(7, 17, 31, 0.6);
+        font-size: 16px;
+        line-height: 1.35;
+      }
+
+      .honesty-list li b {
+        color: var(--teal);
+        font-weight: 600;
+      }
+
+      .classroom-card {
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-top: 2px solid var(--flood);
+        background: rgba(10, 22, 32, 0.9);
+      }
+
+      .classroom-card h3 {
+        font-size: 28px;
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+      }
+
+      .classroom-card p {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      /* Outro */
+      .outro {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 120px;
+        height: 100%;
+      }
+
+      .outro h1 {
+        font-size: 64px;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        max-width: 12ch;
+      }
+
+      .outro h1 span {
+        color: var(--teal);
+      }
+
+      .outro-line {
+        margin-top: 28px;
+        font-size: 28px;
+        color: var(--muted);
+        max-width: 22ch;
+        line-height: 1.3;
+      }
+
+      .outro-meta {
+        margin-top: 36px;
+        color: var(--faint);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 13px;
+      }
+
+      /* Captions — lower third, leave UI clear */
+      .captions {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 36px;
+        height: 90px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 40;
+      }
+
+      .caption-group {
+        position: absolute;
+        left: 160px;
+        right: 160px;
+        bottom: 0;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .caption-group span {
+        display: inline-block;
+        max-width: 1500px;
+        padding: 10px 18px;
+        background: rgba(7, 17, 31, 0.82);
+        border: 1px solid rgba(36, 56, 70, 0.9);
+        color: var(--ink);
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+      }
+
+      .vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.28) 100%);
+        z-index: 5;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="66.5"
+      data-width="1920"
+      data-height="1080"
+      data-fps="30"
+    >
+      <!-- Scene 1: Brand hook 0–8 -->
+      <section id="scene-hook" class="clip" data-start="0" data-duration="9.7" data-track-index="0">
+        <div class="scene-inner" id="hook-inner">
+          <div class="orbit-ring" id="hook-ring" data-layout-allow-overflow></div>
+          <div class="hook">
+            <div class="hook-kicker" id="hook-kicker">NASA Space Apps · Flood Pulse</div>
+            <h1 id="hook-title">DANCING WITH<br /><span>THE SARs</span></h1>
+            <p class="hook-tag" id="hook-tag">Read change through radar.</p>
+            <div class="hook-meta" id="hook-meta">
+              <span>Ops desk</span>
+              <span>Atlas · Globe · Sources</span>
+              <span>Honest labels on</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 2: Atlas 8–26 -->
+      <section id="scene-atlas" class="clip" data-start="9.5" data-duration="15.5" data-track-index="0">
+        <div class="scene-inner" id="atlas-inner">
+          <div class="desk-chrome">
+            <div class="topbar">
+              <div class="brand-lock">DANCING WITH THE SARs <em>Flood Pulse</em></div>
+              <div class="nav-meta"><span>NASA SPACE APPS</span><span>Demo desk</span></div>
+            </div>
+            <div class="tabs">
+              <div class="tab is-active">01 Atlas</div>
+              <div class="tab">02 Globe</div>
+              <div class="tab">03 Sources</div>
+              <div class="tab">04 Classroom</div>
+            </div>
+            <div class="panel atlas-grid">
+              <aside class="atlas-side">
+                <div class="eyebrow">01 / Atlas</div>
+                <div class="country-btn is-active" id="btn-japan">
+                  <div class="swatch flood"></div>
+                  <div>
+                    <small>Flood · 30 sec</small>
+                    <strong>Japan / Honshu</strong>
+                  </div>
+                </div>
+                <div class="country-btn" id="btn-brazil" style="border-color: transparent">
+                  <div class="swatch fire"></div>
+                  <div>
+                    <small>Fire · 30 sec</small>
+                    <strong>Brazil / Amazon</strong>
+                  </div>
+                </div>
+                <div class="method-note" id="atlas-note">
+                  Illustrative terrain and progression, not a measured disaster footprint. Linked to NASA EO references.
+                </div>
+              </aside>
+              <div class="atlas-main">
+                <div class="visual-top">
+                  <span id="atlas-region-flood">Honshu / FLOOD</span>
+                  <span id="atlas-region-fire" style="position: absolute; left: 0; top: 0; opacity: 0">Amazon / FIRE</span>
+                  <span>ILLUSTRATIVE LANDSCAPE</span>
+                </div>
+                <div class="landscape" id="atlas-landscape">
+                  <div class="land-layer land-flood" id="land-flood">
+                    <div class="flood-band" id="flood-band"></div>
+                  </div>
+                  <div class="land-layer land-fire" id="land-fire">
+                    <div class="fire-embers"></div>
+                  </div>
+                  <div class="landscape-badge" id="stage-badge">STAGE 2 / 5 · 42%</div>
+                </div>
+                <div class="player-row">
+                  <div class="btn accent" id="demo-btn">Demo · 30 seconds</div>
+                  <div class="btn">Pause</div>
+                  <div class="btn">Reset</div>
+                  <div class="play-time" id="play-time">12.6s <span>/ 30.0s</span></div>
+                </div>
+                <div class="timeline"><i id="timeline-fill"></i></div>
+                <div class="ref-card" id="ref-card" style="position: relative">
+                  <div class="ref-thumb"></div>
+                  <div id="ref-flood">
+                    <small>REAL SATELLITE REFERENCE · 2019</small>
+                    <strong>Typhoon Hagibis — Honshu floods</strong>
+                    <p>NASA Earth Observatory reference · synthetic progression on desk</p>
+                  </div>
+                  <div id="ref-fire" style="position: absolute; left: 142px; right: 10px; top: 10px; opacity: 0">
+                    <small>REAL SATELLITE REFERENCE · 2019</small>
+                    <strong>Amazon fire season heat</strong>
+                    <p>NASA Earth Observatory reference · Brazil fire demo</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 3: Globe 26–44 -->
+      <section id="scene-globe" class="clip" data-start="24.8" data-duration="17.6" data-track-index="0">
+        <div class="scene-inner" id="globe-inner">
+          <div class="desk-chrome">
+            <div class="topbar">
+              <div class="brand-lock">DANCING WITH THE SARs <em>Flood Pulse</em></div>
+              <div class="nav-meta"><span>3D Globe</span><span>Blue Marble modes</span></div>
+            </div>
+            <div class="tabs">
+              <div class="tab">01 Atlas</div>
+              <div class="tab is-active">02 Globe</div>
+              <div class="tab">03 Sources</div>
+              <div class="tab">04 Classroom</div>
+            </div>
+            <div class="panel globe-grid">
+              <div class="globe-stage" id="globe-stage">
+                <div class="globe-white-bg" id="globe-white-bg"></div>
+                <div class="globe-wrap" id="globe-wrap">
+                  <div class="globe-ball globe-synced" id="globe-synced"></div>
+                  <div class="globe-ball globe-real" id="globe-real"></div>
+                </div>
+                <div class="hover-tip" id="hover-tip">Japan</div>
+              </div>
+              <aside class="globe-side">
+                <div class="eyebrow">02 / 3D Globe</div>
+                <div class="panel-head">
+                  <h2>Two Earth textures</h2>
+                  <p>Synced Natural Earth coasts with Blue Marble land, or the full real Blue Marble photograph.</p>
+                </div>
+                <div class="mode-row">
+                  <span>Map mode</span>
+                  <div class="mode-btns">
+                    <div class="btn is-on" id="mode-synced">Synced map</div>
+                    <div class="btn" id="mode-real">Real Blue Marble</div>
+                  </div>
+                </div>
+                <div class="mode-desc-wrap">
+                  <p class="mode-desc" id="mode-desc-synced">
+                    Synced: Natural Earth coastlines with Blue Marble land detail for readable country picking.
+                  </p>
+                  <p class="mode-desc" id="mode-desc-real" style="opacity: 0">
+                    Real Blue Marble: full NASA photograph of Earth for photographic context.
+                  </p>
+                </div>
+                <div class="check-row">
+                  <span>Display</span>
+                  <label id="white-bg-label">
+                    <div class="check-box" id="white-check">
+                      <span class="check-mark" id="white-check-mark">✓</span>
+                    </div>
+                    White background behind Earth
+                  </label>
+                </div>
+                <div class="sector-note">
+                  Flood/fire sectors are teaching seeds on the globe — not verified perimeters from live catalogs.
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 4: Live Sources 44–53 -->
+      <section id="scene-sources" class="clip" data-start="42.2" data-duration="7.9" data-track-index="0">
+        <div class="scene-inner" id="sources-inner">
+          <div class="desk-chrome">
+            <div class="topbar">
+              <div class="brand-lock">DANCING WITH THE SARs <em>Flood Pulse</em></div>
+              <div class="nav-meta"><span>Live Sources</span><span>ASF · Earthdata</span></div>
+            </div>
+            <div class="tabs">
+              <div class="tab">01 Atlas</div>
+              <div class="tab">02 Globe</div>
+              <div class="tab is-active">03 Sources</div>
+              <div class="tab">04 Classroom</div>
+            </div>
+            <div class="panel sources-grid">
+              <div class="panel-head">
+                <div class="eyebrow">Live Sources</div>
+                <h2>Current ASF and Earthdata scenes</h2>
+                <p>Catalog metadata stays separate from teaching overlays so the signal stays honest.</p>
+              </div>
+              <div class="sources-rail">
+                <article class="endpoint" id="ep-asf">
+                  <div class="rail-label">ENDPOINT 01</div>
+                  <h3>ASF Search</h3>
+                  <p>Sentinel-1 GRD scenes with footprints and browse for the selected bbox and time window.</p>
+                </article>
+                <article class="endpoint" id="ep-cmr">
+                  <div class="rail-label">ENDPOINT 02</div>
+                  <h3>NASA CMR</h3>
+                  <p>Earthdata granules for the same window — real links, not invented extents.</p>
+                </article>
+              </div>
+              <div>
+                <div class="sources-controls">
+                  <div class="btn is-on">Japan</div>
+                  <div class="btn">Brazil</div>
+                  <div class="btn is-on" id="win-latest">Latest 14 days</div>
+                  <div class="btn" id="win-event">Event · 2019</div>
+                </div>
+                <div class="catalog-panel" id="catalog-panel">
+                  <div class="granule">
+                    <small>SENTINEL-1 · GRD</small>
+                    <strong>ASF latest window · Honshu bbox</strong>
+                  </div>
+                  <div class="granule">
+                    <small>VIIRS · EARTHDATA</small>
+                    <strong>CMR granules · same temporal</strong>
+                  </div>
+                  <div class="honesty-banner">
+                    Live catalogs ground visualization. Atlas demos stay illustrative.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 5: Honesty / classroom 53–61 -->
+      <section id="scene-honesty" class="clip" data-start="49.9" data-duration="11.4" data-track-index="0">
+        <div class="scene-inner" id="honesty-inner">
+          <div class="desk-chrome">
+            <div class="topbar">
+              <div class="brand-lock">DANCING WITH THE SARs <em>Flood Pulse</em></div>
+              <div class="nav-meta"><span>Accountability</span><span>Radar Classroom</span></div>
+            </div>
+            <div class="tabs">
+              <div class="tab">01 Atlas</div>
+              <div class="tab">02 Globe</div>
+              <div class="tab">03 Sources</div>
+              <div class="tab is-active">04 Classroom</div>
+            </div>
+            <div class="panel honesty-panel">
+              <div>
+                <div class="eyebrow">Same rule everywhere</div>
+                <h2 style="font-size: 40px; letter-spacing: -0.04em; margin-bottom: 18px">
+                  Show the source. Name the demo.
+                </h2>
+                <ul class="honesty-list">
+                  <li id="rule-1"><b>Show the source</b> — ASF / Earthdata windows stay labeled.</li>
+                  <li id="rule-2"><b>Name the demo</b> — Japan/Brazil Atlas runs are illustrative.</li>
+                  <li id="rule-3"><b>Never mix</b> catalog truth with flood and fire teaching sectors.</li>
+                </ul>
+              </div>
+              <div class="classroom-card" id="classroom-card">
+                <div class="eyebrow">Radar Classroom</div>
+                <h3>Pakistan surface atlas</h3>
+                <p>
+                  Change signals sit beside compare tools and the classroom — teaching seeds, not verified disaster
+                  perimeters.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 6: Outro 61–67 -->
+      <section id="scene-outro" class="clip" data-start="61.1" data-duration="5.4" data-track-index="0">
+        <div class="scene-inner" id="outro-inner">
+          <div class="orbit-ring" id="outro-ring" data-layout-allow-overflow></div>
+          <div class="outro">
+            <div class="hook-kicker" id="outro-kicker">Flood Pulse</div>
+            <h1 id="outro-title">DANCING WITH<br /><span>THE SARs</span></h1>
+            <p class="outro-line" id="outro-line">Read change through radar — and keep the story accountable.</p>
+            <div class="outro-meta" id="outro-meta">NASA Space Apps</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="vignette"></div>
+
+      <!-- Lower-third captions (timed from Whisper transcript) -->
+      <div class="captions" id="captions-layer" data-track-index="1">
+        <div class="caption-group" id="cg-0"><span>This is Dancing with the SARs — Flood Pulse.</span></div>
+        <div class="caption-group" id="cg-1"><span>A NASA Space Apps desk for reading Earth change through radar,</span></div>
+        <div class="caption-group" id="cg-2"><span>without pretending every colorful overlay is a measurement.</span></div>
+        <div class="caption-group" id="cg-3"><span>Start in Atlas. Pick Japan or Brazil.</span></div>
+        <div class="caption-group" id="cg-4"><span>Run a 30-second flood or fire demo grounded in NASA EO references —</span></div>
+        <div class="caption-group" id="cg-5"><span>Typhoon Hagibis over Honshu, Amazon fire season heat —</span></div>
+        <div class="caption-group" id="cg-6"><span>while the terrain progression stays honestly synthetic.</span></div>
+        <div class="caption-group" id="cg-7"><span>Then open the 3D globe. Spin Blue Marble Earth.</span></div>
+        <div class="caption-group" id="cg-8"><span>Hover a country for its name.</span></div>
+        <div class="caption-group" id="cg-9"><span>Switch between Synced map and Real Blue Marble.</span></div>
+        <div class="caption-group" id="cg-10"><span>Prefer a clean look? Flip on the white background.</span></div>
+        <div class="caption-group" id="cg-11"><span>Live Sources pulls ASF and Earthdata catalogs —</span></div>
+        <div class="caption-group" id="cg-12"><span>latest windows, kept separate so the signal stays honest.</span></div>
+        <div class="caption-group" id="cg-13"><span>Pakistan surface atlas sits beside compare and Radar Classroom.</span></div>
+        <div class="caption-group" id="cg-14"><span>Show the source, name the demo — never mix catalog truth with teaching sectors.</span></div>
+        <div class="caption-group" id="cg-15"><span>Read change through radar — and keep the story accountable.</span></div>
+      </div>
+
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="66.313" data-track-index="3" data-volume="1"></audio>
+      <audio id="music" src="assets/music/happy-beats-business-moves-vol-9-by-ende-dot-app.mp3" data-start="0" data-duration="66.5" data-track-index="2" data-volume="0.14"></audio>
+      <audio id="sfx-click" src="assets/sfx/interface/click_001.ogg" data-start="10.0" data-duration="0.4" data-track-index="4" data-volume="0.35"></audio>
+      <audio id="sfx-select" src="assets/sfx/interface/select_008.ogg" data-start="14.5" data-duration="0.5" data-track-index="4" data-volume="0.32"></audio>
+      <audio id="sfx-switch" src="assets/sfx/interface/switch_001.ogg" data-start="32.8" data-duration="0.45" data-track-index="4" data-volume="0.35"></audio>
+      <audio id="sfx-bong" src="assets/sfx/interface/bong_001.ogg" data-start="38.5" data-duration="0.6" data-track-index="4" data-volume="0.28"></audio>
+      <audio id="sfx-click2" src="assets/sfx/interface/click_001.ogg" data-start="42.5" data-duration="0.4" data-track-index="4" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const GROUPS = [
+        { id: 0, start: 0.04, end: 3.0 },
+        { id: 1, start: 3.04, end: 6.4 },
+        { id: 2, start: 6.45, end: 9.63 },
+        { id: 3, start: 9.69, end: 12.64 },
+        { id: 4, start: 12.67, end: 17.4 },
+        { id: 5, start: 17.45, end: 22.4 },
+        { id: 6, start: 22.45, end: 24.76 },
+        { id: 7, start: 24.8, end: 27.77 },
+        { id: 8, start: 27.79, end: 29.56 },
+        { id: 9, start: 29.56, end: 36.88 },
+        { id: 10, start: 37.39, end: 42.15 },
+        { id: 11, start: 42.24, end: 44.72 },
+        { id: 12, start: 44.72, end: 49.83 },
+        { id: 13, start: 49.93, end: 54.84 },
+        { id: 14, start: 54.96, end: 61.17 },
+        { id: 15, start: 61.18, end: 66.28 },
+      ];
+      tl.fromTo("#hook-inner", { opacity: 0 }, { opacity: 1, duration: 0.7, ease: "power2.out" }, 0);
+      tl.fromTo("#hook-kicker", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.25);
+      tl.fromTo("#hook-title", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.4);
+      tl.fromTo("#hook-tag", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 0.85);
+      tl.fromTo("#hook-meta", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 1.2);
+      tl.fromTo("#hook-ring", { opacity: 0, scale: 0.92 }, { opacity: 0.85, scale: 1, duration: 1.2, ease: "power2.out" }, 0.3);
+      tl.to("#hook-inner", { opacity: 0, duration: 0.4, ease: "power1.in" }, 9.2);
+      tl.fromTo("#atlas-inner", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 9.5);
+      tl.fromTo("#btn-japan", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 9.8);
+      tl.fromTo("#btn-brazil", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 9.95);
+      tl.fromTo("#atlas-landscape", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 10.1);
+      tl.fromTo("#demo-btn", { opacity: 0.5 }, { opacity: 1, duration: 0.25 }, 14.5);
+      tl.fromTo("#flood-band", { y: 24, opacity: 0.4 }, { y: 0, opacity: 0.95, duration: 2.8, ease: "sine.inOut" }, 14.6);
+      tl.fromTo("#timeline-fill", { scaleX: 0.15 }, { scaleX: 0.55, duration: 4, ease: "none", transformOrigin: "left center" }, 14.6);
+      tl.to("#btn-japan", { borderColor: "#243846", backgroundColor: "rgba(7,17,31,0.7)", duration: 0.25 }, 20.8);
+      tl.to("#btn-brazil", { borderColor: "#6eb8ae", backgroundColor: "rgba(110,184,174,0.08)", duration: 0.25 }, 20.8);
+      tl.to("#land-flood", { opacity: 0, duration: 0.45, ease: "power1.inOut" }, 20.8);
+      tl.to("#land-fire", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 20.8);
+      tl.to("#atlas-region-flood", { opacity: 0, duration: 0.25 }, 20.8);
+      tl.to("#atlas-region-fire", { opacity: 1, duration: 0.25 }, 20.8);
+      tl.to("#ref-flood", { opacity: 0, duration: 0.25 }, 20.8);
+      tl.to("#ref-fire", { opacity: 1, duration: 0.25 }, 20.8);
+      tl.to("#atlas-inner", { opacity: 0, duration: 0.4, ease: "power1.in" }, 24.45);
+      tl.fromTo("#globe-inner", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 24.8);
+      tl.fromTo("#globe-wrap", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.75, ease: "power3.out" }, 25.0);
+      tl.to("#globe-wrap", { rotation: 18, duration: 12, ease: "none" }, 25.4);
+      tl.fromTo("#hover-tip", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 27.9);
+      tl.to("#hover-tip", { opacity: 0, duration: 0.3 }, 29.4);
+      tl.to("#mode-synced", { borderColor: "#243846", color: "#e6eef2", duration: 0.2 }, 32.8);
+      tl.to("#mode-real", { borderColor: "#6eb8ae", color: "#6eb8ae", duration: 0.2 }, 32.8);
+      tl.to("#globe-synced", { opacity: 0, duration: 0.4, ease: "power1.inOut" }, 32.8);
+      tl.to("#globe-real", { opacity: 1, duration: 0.4, ease: "power1.inOut" }, 32.8);
+      tl.to("#mode-desc-synced", { opacity: 0, duration: 0.25 }, 32.8);
+      tl.to("#mode-desc-real", { opacity: 1, duration: 0.25 }, 32.8);
+      tl.to("#white-check", { borderColor: "#6eb8ae", backgroundColor: "rgba(110,184,174,0.2)", duration: 0.25 }, 38.5);
+      tl.to("#white-check-mark", { opacity: 1, duration: 0.25 }, 38.5);
+      tl.to("#globe-white-bg", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 38.5);
+      tl.to("#globe-inner", { opacity: 0, duration: 0.35, ease: "power1.in" }, 41.95);
+      tl.fromTo("#sources-inner", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.out" }, 42.2);
+      tl.fromTo("#ep-asf", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 42.5);
+      tl.fromTo("#ep-cmr", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 42.65);
+      tl.fromTo("#catalog-panel", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.out" }, 43.0);
+      tl.to("#sources-inner", { opacity: 0, duration: 0.35, ease: "power1.in" }, 49.65);
+      tl.fromTo("#honesty-inner", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.out" }, 49.9);
+      tl.fromTo("#rule-1", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 50.4);
+      tl.fromTo("#rule-2", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 50.65);
+      tl.fromTo("#rule-3", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 50.9);
+      tl.fromTo("#classroom-card", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 51.3);
+      tl.to("#honesty-inner", { opacity: 0, duration: 0.35, ease: "power1.in" }, 60.85);
+      tl.fromTo("#outro-inner", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 61.1);
+      tl.fromTo("#outro-kicker", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 61.25);
+      tl.fromTo("#outro-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 61.4);
+      tl.fromTo("#outro-line", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 61.7);
+      tl.fromTo("#outro-meta", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.out" }, 62.2);
+      tl.fromTo("#outro-ring", { opacity: 0, scale: 0.94 }, { opacity: 0.8, scale: 1, duration: 1.0, ease: "power2.out" }, 61.15);
+      GROUPS.forEach(function (group) {
+        var el = document.getElementById("cg-" + group.id);
+        if (!el) return;
+        tl.set(el, { opacity: 0, visibility: "visible" }, group.start);
+        tl.to(el, { opacity: 1, duration: 0.15, ease: "power2.out" }, group.start);
+        tl.to(el, { opacity: 0, duration: 0.1, ease: "power2.in" }, Math.max(group.start, group.end - 0.1));
+        tl.set(el, { opacity: 0, visibility: "hidden" }, group.end);
+      });
+      GROUPS.forEach(function (group) {
+        var el = document.getElementById("cg-" + group.id);
+        if (!el) return;
+        tl.seek(group.end + 0.01);
+        var computed = window.getComputedStyle(el);
+        if (computed.opacity !== "0" && computed.visibility !== "hidden") {
+          console.warn("[caption-lint] group " + group.id + " still visible");
+        }
+      });
+      tl.seek(0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

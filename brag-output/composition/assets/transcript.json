@@ -1,0 +1,1082 @@
+[
+  {
+    "text": "This",
+    "start": 0.04,
+    "end": 0.28,
+    "id": "w0"
+  },
+  {
+    "text": "is",
+    "start": 0.28,
+    "end": 0.42,
+    "id": "w1"
+  },
+  {
+    "text": "dancing",
+    "start": 0.42,
+    "end": 0.84,
+    "id": "w2"
+  },
+  {
+    "text": "with",
+    "start": 0.92,
+    "end": 1.2,
+    "id": "w3"
+  },
+  {
+    "text": "the",
+    "start": 1.2,
+    "end": 1.41,
+    "id": "w4"
+  },
+  {
+    "text": "SARs,",
+    "start": 1.41,
+    "end": 1.75,
+    "id": "w5"
+  },
+  {
+    "text": "flood",
+    "start": 1.94,
+    "end": 2.42,
+    "id": "w6"
+  },
+  {
+    "text": "pulse.",
+    "start": 2.42,
+    "end": 3,
+    "id": "w7"
+  },
+  {
+    "text": "A",
+    "start": 3.04,
+    "end": 3.07,
+    "id": "w8"
+  },
+  {
+    "text": "NASA",
+    "start": 3.07,
+    "end": 3.29,
+    "id": "w9"
+  },
+  {
+    "text": "space",
+    "start": 3.36,
+    "end": 3.72,
+    "id": "w10"
+  },
+  {
+    "text": "app's",
+    "start": 3.72,
+    "end": 4.07,
+    "id": "w11"
+  },
+  {
+    "text": "desk",
+    "start": 4.07,
+    "end": 4.38,
+    "id": "w12"
+  },
+  {
+    "text": "for",
+    "start": 4.38,
+    "end": 4.5,
+    "id": "w13"
+  },
+  {
+    "text": "reading",
+    "start": 4.5,
+    "end": 4.74,
+    "id": "w14"
+  },
+  {
+    "text": "Earth",
+    "start": 4.94,
+    "end": 5.06,
+    "id": "w15"
+  },
+  {
+    "text": "change",
+    "start": 5.06,
+    "end": 5.36,
+    "id": "w16"
+  },
+  {
+    "text": "through",
+    "start": 5.41,
+    "end": 5.51,
+    "id": "w17"
+  },
+  {
+    "text": "radar,",
+    "start": 6.03,
+    "end": 6.4,
+    "id": "w18"
+  },
+  {
+    "text": "without",
+    "start": 6.4,
+    "end": 6.6,
+    "id": "w19"
+  },
+  {
+    "text": "pretending",
+    "start": 6.6,
+    "end": 7.02,
+    "id": "w20"
+  },
+  {
+    "text": "every",
+    "start": 7.09,
+    "end": 7.29,
+    "id": "w21"
+  },
+  {
+    "text": "colorful",
+    "start": 7.39,
+    "end": 7.89,
+    "id": "w22"
+  },
+  {
+    "text": "overlay",
+    "start": 7.94,
+    "end": 8.41,
+    "id": "w23"
+  },
+  {
+    "text": "is",
+    "start": 8.41,
+    "end": 8.55,
+    "id": "w24"
+  },
+  {
+    "text": "a",
+    "start": 8.55,
+    "end": 8.62,
+    "id": "w25"
+  },
+  {
+    "text": "measurement.",
+    "start": 8.62,
+    "end": 9.63,
+    "id": "w26"
+  },
+  {
+    "text": "Start",
+    "start": 9.69,
+    "end": 10.09,
+    "id": "w27"
+  },
+  {
+    "text": "an",
+    "start": 10.09,
+    "end": 10.27,
+    "id": "w28"
+  },
+  {
+    "text": "Atlas,",
+    "start": 10.27,
+    "end": 10.9,
+    "id": "w29"
+  },
+  {
+    "text": "pick",
+    "start": 10.9,
+    "end": 11.22,
+    "id": "w30"
+  },
+  {
+    "text": "Japan",
+    "start": 11.25,
+    "end": 11.71,
+    "id": "w31"
+  },
+  {
+    "text": "or",
+    "start": 11.71,
+    "end": 11.89,
+    "id": "w32"
+  },
+  {
+    "text": "Brazil,",
+    "start": 11.89,
+    "end": 12.64,
+    "id": "w33"
+  },
+  {
+    "text": "run",
+    "start": 12.67,
+    "end": 12.82,
+    "id": "w34"
+  },
+  {
+    "text": "a",
+    "start": 12.82,
+    "end": 12.88,
+    "id": "w35"
+  },
+  {
+    "text": "30-second",
+    "start": 12.88,
+    "end": 13.66,
+    "id": "w36"
+  },
+  {
+    "text": "flood",
+    "start": 13.66,
+    "end": 13.93,
+    "id": "w37"
+  },
+  {
+    "text": "or",
+    "start": 14.05,
+    "end": 14.08,
+    "id": "w38"
+  },
+  {
+    "text": "fire",
+    "start": 14.08,
+    "end": 14.32,
+    "id": "w39"
+  },
+  {
+    "text": "demo",
+    "start": 14.32,
+    "end": 14.56,
+    "id": "w40"
+  },
+  {
+    "text": "grounded",
+    "start": 14.56,
+    "end": 15.03,
+    "id": "w41"
+  },
+  {
+    "text": "in",
+    "start": 15.11,
+    "end": 15.2,
+    "id": "w42"
+  },
+  {
+    "text": "real",
+    "start": 15.25,
+    "end": 15.49,
+    "id": "w43"
+  },
+  {
+    "text": "NASA",
+    "start": 15.56,
+    "end": 15.84,
+    "id": "w44"
+  },
+  {
+    "text": "Earth",
+    "start": 15.84,
+    "end": 16.24,
+    "id": "w45"
+  },
+  {
+    "text": "observatory",
+    "start": 16.24,
+    "end": 16.94,
+    "id": "w46"
+  },
+  {
+    "text": "references,",
+    "start": 17.13,
+    "end": 18.08,
+    "id": "w47"
+  },
+  {
+    "text": "typhoon",
+    "start": 18.23,
+    "end": 18.64,
+    "id": "w48"
+  },
+  {
+    "text": "hajibis",
+    "start": 18.64,
+    "end": 19.17,
+    "id": "w49"
+  },
+  {
+    "text": "over",
+    "start": 19.2,
+    "end": 19.49,
+    "id": "w50"
+  },
+  {
+    "text": "Honshu",
+    "start": 19.6,
+    "end": 20,
+    "id": "w51"
+  },
+  {
+    "text": "Amazon",
+    "start": 20,
+    "end": 20.48,
+    "id": "w52"
+  },
+  {
+    "text": "fire",
+    "start": 20.48,
+    "end": 20.8,
+    "id": "w53"
+  },
+  {
+    "text": "season",
+    "start": 20.8,
+    "end": 21.26,
+    "id": "w54"
+  },
+  {
+    "text": "heat,",
+    "start": 21.61,
+    "end": 21.76,
+    "id": "w55"
+  },
+  {
+    "text": "while",
+    "start": 21.81,
+    "end": 22.05,
+    "id": "w56"
+  },
+  {
+    "text": "the",
+    "start": 22.05,
+    "end": 22.22,
+    "id": "w57"
+  },
+  {
+    "text": "terrain",
+    "start": 22.22,
+    "end": 22.6,
+    "id": "w58"
+  },
+  {
+    "text": "progression",
+    "start": 22.68,
+    "end": 23.27,
+    "id": "w59"
+  },
+  {
+    "text": "stays",
+    "start": 23.27,
+    "end": 23.5,
+    "id": "w60"
+  },
+  {
+    "text": "honestly",
+    "start": 23.7,
+    "end": 24.03,
+    "id": "w61"
+  },
+  {
+    "text": "synthetic.",
+    "start": 24.03,
+    "end": 24.76,
+    "id": "w62"
+  },
+  {
+    "text": "Then",
+    "start": 24.8,
+    "end": 25.04,
+    "id": "w63"
+  },
+  {
+    "text": "open",
+    "start": 25.04,
+    "end": 25.31,
+    "id": "w64"
+  },
+  {
+    "text": "the",
+    "start": 25.36,
+    "end": 25.53,
+    "id": "w65"
+  },
+  {
+    "text": "3D",
+    "start": 25.53,
+    "end": 25.8,
+    "id": "w66"
+  },
+  {
+    "text": "globe,",
+    "start": 25.81,
+    "end": 26.3,
+    "id": "w67"
+  },
+  {
+    "text": "spin",
+    "start": 26.3,
+    "end": 26.51,
+    "id": "w68"
+  },
+  {
+    "text": "Blue",
+    "start": 26.7,
+    "end": 26.86,
+    "id": "w69"
+  },
+  {
+    "text": "Marble",
+    "start": 26.86,
+    "end": 27.27,
+    "id": "w70"
+  },
+  {
+    "text": "Earth,",
+    "start": 27.27,
+    "end": 27.77,
+    "id": "w71"
+  },
+  {
+    "text": "hover",
+    "start": 27.79,
+    "end": 28.11,
+    "id": "w72"
+  },
+  {
+    "text": "a",
+    "start": 28.11,
+    "end": 28.19,
+    "id": "w73"
+  },
+  {
+    "text": "country",
+    "start": 28.19,
+    "end": 28.66,
+    "id": "w74"
+  },
+  {
+    "text": "for",
+    "start": 28.76,
+    "end": 28.89,
+    "id": "w75"
+  },
+  {
+    "text": "its",
+    "start": 28.89,
+    "end": 29.05,
+    "id": "w76"
+  },
+  {
+    "text": "name,",
+    "start": 29.17,
+    "end": 29.56,
+    "id": "w77"
+  },
+  {
+    "text": "switch",
+    "start": 29.56,
+    "end": 29.72,
+    "id": "w78"
+  },
+  {
+    "text": "between",
+    "start": 29.81,
+    "end": 30.21,
+    "id": "w79"
+  },
+  {
+    "text": "two",
+    "start": 30.21,
+    "end": 30.4,
+    "id": "w80"
+  },
+  {
+    "text": "map",
+    "start": 30.4,
+    "end": 30.59,
+    "id": "w81"
+  },
+  {
+    "text": "modes,",
+    "start": 30.59,
+    "end": 31.03,
+    "id": "w82"
+  },
+  {
+    "text": "the",
+    "start": 31.03,
+    "end": 31.22,
+    "id": "w83"
+  },
+  {
+    "text": "synced",
+    "start": 31.22,
+    "end": 31.51,
+    "id": "w84"
+  },
+  {
+    "text": "natural",
+    "start": 31.7,
+    "end": 32.05,
+    "id": "w85"
+  },
+  {
+    "text": "Earth",
+    "start": 32.05,
+    "end": 32.27,
+    "id": "w86"
+  },
+  {
+    "text": "coasts",
+    "start": 32.27,
+    "end": 32.79,
+    "id": "w87"
+  },
+  {
+    "text": "with",
+    "start": 32.79,
+    "end": 33,
+    "id": "w88"
+  },
+  {
+    "text": "Blue",
+    "start": 33,
+    "end": 33.24,
+    "id": "w89"
+  },
+  {
+    "text": "Marble",
+    "start": 33.32,
+    "end": 33.63,
+    "id": "w90"
+  },
+  {
+    "text": "land",
+    "start": 33.63,
+    "end": 33.88,
+    "id": "w91"
+  },
+  {
+    "text": "detail",
+    "start": 33.88,
+    "end": 34.36,
+    "id": "w92"
+  },
+  {
+    "text": "or",
+    "start": 34.41,
+    "end": 34.51,
+    "id": "w93"
+  },
+  {
+    "text": "the",
+    "start": 34.51,
+    "end": 34.74,
+    "id": "w94"
+  },
+  {
+    "text": "full",
+    "start": 34.74,
+    "end": 35.04,
+    "id": "w95"
+  },
+  {
+    "text": "real",
+    "start": 35.04,
+    "end": 35.34,
+    "id": "w96"
+  },
+  {
+    "text": "Blue",
+    "start": 35.34,
+    "end": 35.64,
+    "id": "w97"
+  },
+  {
+    "text": "Marble",
+    "start": 35.64,
+    "end": 36.09,
+    "id": "w98"
+  },
+  {
+    "text": "photograph,",
+    "start": 36.09,
+    "end": 36.88,
+    "id": "w99"
+  },
+  {
+    "text": "prefer",
+    "start": 37.39,
+    "end": 37.41,
+    "id": "w100"
+  },
+  {
+    "text": "a",
+    "start": 37.41,
+    "end": 37.47,
+    "id": "w101"
+  },
+  {
+    "text": "clean",
+    "start": 37.47,
+    "end": 37.77,
+    "id": "w102"
+  },
+  {
+    "text": "look,",
+    "start": 37.77,
+    "end": 38.12,
+    "id": "w103"
+  },
+  {
+    "text": "flip",
+    "start": 38.13,
+    "end": 38.37,
+    "id": "w104"
+  },
+  {
+    "text": "on",
+    "start": 38.37,
+    "end": 38.49,
+    "id": "w105"
+  },
+  {
+    "text": "the",
+    "start": 38.49,
+    "end": 38.65,
+    "id": "w106"
+  },
+  {
+    "text": "white",
+    "start": 38.77,
+    "end": 38.97,
+    "id": "w107"
+  },
+  {
+    "text": "background",
+    "start": 38.97,
+    "end": 39.64,
+    "id": "w108"
+  },
+  {
+    "text": "behind",
+    "start": 39.69,
+    "end": 40.07,
+    "id": "w109"
+  },
+  {
+    "text": "the",
+    "start": 40.07,
+    "end": 40.28,
+    "id": "w110"
+  },
+  {
+    "text": "globe,",
+    "start": 40.28,
+    "end": 40.77,
+    "id": "w111"
+  },
+  {
+    "text": "need",
+    "start": 40.78,
+    "end": 41.07,
+    "id": "w112"
+  },
+  {
+    "text": "live",
+    "start": 41.07,
+    "end": 41.35,
+    "id": "w113"
+  },
+  {
+    "text": "evidence.",
+    "start": 41.35,
+    "end": 42.15,
+    "id": "w114"
+  },
+  {
+    "text": "Live",
+    "start": 42.24,
+    "end": 42.45,
+    "id": "w115"
+  },
+  {
+    "text": "sources",
+    "start": 42.45,
+    "end": 42.89,
+    "id": "w116"
+  },
+  {
+    "text": "pulls",
+    "start": 42.89,
+    "end": 43.21,
+    "id": "w117"
+  },
+  {
+    "text": "ASF",
+    "start": 43.21,
+    "end": 43.39,
+    "id": "w118"
+  },
+  {
+    "text": "and",
+    "start": 43.39,
+    "end": 43.58,
+    "id": "w119"
+  },
+  {
+    "text": "Earth",
+    "start": 43.58,
+    "end": 43.78,
+    "id": "w120"
+  },
+  {
+    "text": "data",
+    "start": 43.89,
+    "end": 44.15,
+    "id": "w121"
+  },
+  {
+    "text": "catalogs,",
+    "start": 44.15,
+    "end": 44.72,
+    "id": "w122"
+  },
+  {
+    "text": "latest",
+    "start": 44.72,
+    "end": 45.23,
+    "id": "w123"
+  },
+  {
+    "text": "windows,",
+    "start": 45.23,
+    "end": 45.69,
+    "id": "w124"
+  },
+  {
+    "text": "kept",
+    "start": 45.76,
+    "end": 45.96,
+    "id": "w125"
+  },
+  {
+    "text": "separate",
+    "start": 45.96,
+    "end": 46.47,
+    "id": "w126"
+  },
+  {
+    "text": "from",
+    "start": 46.47,
+    "end": 46.71,
+    "id": "w127"
+  },
+  {
+    "text": "teaching",
+    "start": 46.72,
+    "end": 47.32,
+    "id": "w128"
+  },
+  {
+    "text": "overlays",
+    "start": 47.37,
+    "end": 47.93,
+    "id": "w129"
+  },
+  {
+    "text": "so",
+    "start": 47.93,
+    "end": 48.08,
+    "id": "w130"
+  },
+  {
+    "text": "the",
+    "start": 48.08,
+    "end": 48.31,
+    "id": "w131"
+  },
+  {
+    "text": "signal",
+    "start": 48.31,
+    "end": 48.77,
+    "id": "w132"
+  },
+  {
+    "text": "stays",
+    "start": 48.77,
+    "end": 49.06,
+    "id": "w133"
+  },
+  {
+    "text": "honest.",
+    "start": 49.26,
+    "end": 49.83,
+    "id": "w134"
+  },
+  {
+    "text": "Pakistan's",
+    "start": 49.93,
+    "end": 50.52,
+    "id": "w135"
+  },
+  {
+    "text": "Surface",
+    "start": 50.53,
+    "end": 50.98,
+    "id": "w136"
+  },
+  {
+    "text": "Atlas",
+    "start": 50.98,
+    "end": 51.3,
+    "id": "w137"
+  },
+  {
+    "text": "and",
+    "start": 51.3,
+    "end": 51.46,
+    "id": "w138"
+  },
+  {
+    "text": "change",
+    "start": 51.49,
+    "end": 51.88,
+    "id": "w139"
+  },
+  {
+    "text": "signals",
+    "start": 51.88,
+    "end": 52.33,
+    "id": "w140"
+  },
+  {
+    "text": "sit",
+    "start": 52.33,
+    "end": 52.4,
+    "id": "w141"
+  },
+  {
+    "text": "beside",
+    "start": 52.4,
+    "end": 52.91,
+    "id": "w142"
+  },
+  {
+    "text": "compare",
+    "start": 52.91,
+    "end": 53.36,
+    "id": "w143"
+  },
+  {
+    "text": "and",
+    "start": 53.36,
+    "end": 53.55,
+    "id": "w144"
+  },
+  {
+    "text": "the",
+    "start": 53.55,
+    "end": 53.74,
+    "id": "w145"
+  },
+  {
+    "text": "radar",
+    "start": 53.74,
+    "end": 54.06,
+    "id": "w146"
+  },
+  {
+    "text": "classroom.",
+    "start": 54.06,
+    "end": 54.84,
+    "id": "w147"
+  },
+  {
+    "text": "Same",
+    "start": 54.96,
+    "end": 55.14,
+    "id": "w148"
+  },
+  {
+    "text": "rule",
+    "start": 55.14,
+    "end": 55.36,
+    "id": "w149"
+  },
+  {
+    "text": "everywhere,",
+    "start": 55.36,
+    "end": 56.04,
+    "id": "w150"
+  },
+  {
+    "text": "show",
+    "start": 56.04,
+    "end": 56.26,
+    "id": "w151"
+  },
+  {
+    "text": "the",
+    "start": 56.26,
+    "end": 56.42,
+    "id": "w152"
+  },
+  {
+    "text": "source",
+    "start": 56.42,
+    "end": 56.66,
+    "id": "w153"
+  },
+  {
+    "text": "name",
+    "start": 56.86,
+    "end": 56.99,
+    "id": "w154"
+  },
+  {
+    "text": "the",
+    "start": 56.99,
+    "end": 57.16,
+    "id": "w155"
+  },
+  {
+    "text": "demo,",
+    "start": 57.16,
+    "end": 57.44,
+    "id": "w156"
+  },
+  {
+    "text": "never",
+    "start": 57.44,
+    "end": 57.695,
+    "id": "w157"
+  },
+  {
+    "text": "mix",
+    "start": 57.695,
+    "end": 57.95,
+    "id": "w158"
+  },
+  {
+    "text": "catalog",
+    "start": 57.95,
+    "end": 58.34,
+    "id": "w159"
+  },
+  {
+    "text": "truth",
+    "start": 58.34,
+    "end": 58.61,
+    "id": "w160"
+  },
+  {
+    "text": "with",
+    "start": 58.62,
+    "end": 58.82,
+    "id": "w161"
+  },
+  {
+    "text": "illustrative",
+    "start": 58.89,
+    "end": 59.62,
+    "id": "w162"
+  },
+  {
+    "text": "flood",
+    "start": 59.67,
+    "end": 59.99,
+    "id": "w163"
+  },
+  {
+    "text": "and",
+    "start": 59.99,
+    "end": 60.17,
+    "id": "w164"
+  },
+  {
+    "text": "fire",
+    "start": 60.22,
+    "end": 60.46,
+    "id": "w165"
+  },
+  {
+    "text": "sectors,",
+    "start": 60.54,
+    "end": 61.17,
+    "id": "w166"
+  },
+  {
+    "text": "dancing",
+    "start": 61.18,
+    "end": 61.72,
+    "id": "w167"
+  },
+  {
+    "text": "with",
+    "start": 61.72,
+    "end": 61.98,
+    "id": "w168"
+  },
+  {
+    "text": "the",
+    "start": 62.03,
+    "end": 62.13,
+    "id": "w169"
+  },
+  {
+    "text": "SARs,",
+    "start": 62.46,
+    "end": 62.68,
+    "id": "w170"
+  },
+  {
+    "text": "read",
+    "start": 62.68,
+    "end": 62.96,
+    "id": "w171"
+  },
+  {
+    "text": "change",
+    "start": 62.98,
+    "end": 63.43,
+    "id": "w172"
+  },
+  {
+    "text": "through",
+    "start": 63.43,
+    "end": 63.91,
+    "id": "w173"
+  },
+  {
+    "text": "radar",
+    "start": 64.03,
+    "end": 64.33,
+    "id": "w174"
+  },
+  {
+    "text": "and",
+    "start": 64.33,
+    "end": 64.55,
+    "id": "w175"
+  },
+  {
+    "text": "keep",
+    "start": 64.55,
+    "end": 64.85,
+    "id": "w176"
+  },
+  {
+    "text": "the",
+    "start": 64.85,
+    "end": 65.16,
+    "id": "w177"
+  },
+  {
+    "text": "story",
+    "start": 65.16,
+    "end": 65.68,
+    "id": "w178"
+  },
+  {
+    "text": "accountable.",
+    "start": 65.73,
+    "end": 66.28,
+    "id": "w179"
+  }
+]

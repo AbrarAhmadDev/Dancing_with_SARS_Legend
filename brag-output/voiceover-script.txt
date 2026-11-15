@@ -1,0 +1,11 @@
+This is Dancing with the SARs — Flood Pulse. A NASA Space Apps desk for reading Earth change through radar, without pretending every colorful overlay is a measurement.
+
+Start in Atlas. Pick Japan or Brazil. Run a thirty-second flood or fire demo grounded in real NASA Earth Observatory references — Typhoon Hagibis over Honshu, Amazon fire season heat — while the terrain progression stays honestly synthetic.
+
+Then open the three-D globe. Spin Blue Marble Earth. Hover a country for its name. Switch between two map modes: the synced Natural Earth coasts with Blue Marble land detail, or the full real Blue Marble photograph. Prefer a clean look? Flip on the white background behind the globe.
+
+Need live evidence? Live Sources pulls ASF and Earthdata catalogs — latest windows, kept separate from teaching overlays so the signal stays honest.
+
+Pakistan surface atlas and change signals sit beside compare and the radar classroom. Same rule everywhere: show the source, name the demo, never mix catalog truth with illustrative flood and fire sectors.
+
+Dancing with the SARs. Read change through radar — and keep the story accountable.

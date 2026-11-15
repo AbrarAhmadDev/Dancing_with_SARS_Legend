@@ -9,3 +9,9 @@ test-results
 .cursor
 tmp-tiles
 *.log
+.env*
+# Brag / Hyperframes local junk
+brag-output/_hf_init_tmp/
+brag-output/.brag.hf-transaction-*/
+brag-output/composition/.hyperframes/
+.env.local
