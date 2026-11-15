@@ -1,0 +1,222 @@
+/* SAR ops desk: flat instrument UI. Color on data, not chrome. */
+
+:root {
+  --ink: #e6eef2;
+  --muted: #8fa6b3;
+  --faint: #5f7684;
+  --surface: #0a1620;
+  --line: #243846;
+  --teal: #6eb8ae;
+  --flood: #e6c65a;
+  --fire: #e07040;
+  --ok: #7fbe8f;
+}
+
+body {
+  background: #07111f !important;
+}
+
+.app-shell {
+  background: none !important;
+}
+
+.app-nav {
+  height: 56px;
+  background: #07111f;
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  letter-spacing: 0.12em;
+}
+
+.nav-meta span {
+  color: var(--faint) !important;
+}
+
+.site-header {
+  padding-top: 40px;
+  padding-bottom: 28px;
+  align-items: flex-end;
+}
+
+.site-header h1 {
+  font-size: clamp(36px, 4.8vw, 56px);
+  max-width: 16ch;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  margin: 12px 0 14px;
+}
+
+.site-header h1 em {
+  color: var(--teal);
+}
+
+.site-header p {
+  font-size: 14px;
+  max-width: 52ch;
+  color: var(--muted);
+}
+
+.header-context {
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-left: 2px solid var(--teal) !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  padding: 14px 16px !important;
+  min-width: 260px;
+}
+
+.header-context small .pulse {
+  box-shadow: none !important;
+  background: var(--ok);
+}
+
+.tab-shell {
+  background: #07111f !important;
+  backdrop-filter: none !important;
+  border-bottom: 1px solid var(--line);
+}
+
+.tab-list {
+  max-width: none !important;
+  gap: 0 !important;
+  overflow-x: auto;
+}
+
+.tab-button {
+  border-radius: 0 !important;
+  padding: 14px 16px !important;
+  font-size: 12px !important;
+  letter-spacing: 0.02em;
+  color: var(--faint) !important;
+  border-bottom: 2px solid transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tab-button:hover {
+  color: var(--ink) !important;
+  background: transparent !important;
+}
+
+.tab-button.is-active {
+  color: var(--ink) !important;
+  background: transparent !important;
+  border-bottom-color: var(--teal) !important;
+  box-shadow: none !important;
+}
+
+.tab-rule {
+  display: none;
+}
+
+.section-heading h2 {
+  font-size: 26px !important;
+  letter-spacing: -0.04em;
+  margin: 8px 0 6px !important;
+}
+
+.section-heading p {
+  font-size: 13px;
+  max-width: 62ch;
+}
+
+.cache-pill,
+.compare-span,
+.score {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 7px 10px;
+  background: var(--surface);
+}
+
+.cache-pill span {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  width: 6px !important;
+  height: 6px !important;
+  background: var(--ok) !important;
+}
+
+/* Soften leftover template cards elsewhere */
+.simulation-card {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.simulation-card:hover,
+.simulation-card.is-selected {
+  transform: none !important;
+  border-color: var(--teal) !important;
+}
+
+.simulation-swatch {
+  border-radius: 2px !important;
+  background: transparent !important;
+  border: 1px solid var(--line);
+  color: var(--teal) !important;
+}
+
+.simulation-swatch.teal,
+.simulation-swatch.orange {
+  background: transparent !important;
+}
+
+.compare-panel,
+.quiz-layout,
+.insight-panel {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+
+.interactive-map,
+.pakistan-atlas,
+.workspace-sidebar {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+
+.pakistan-atlas {
+  background: var(--surface) !important;
+}
+
+.atlas-status,
+.atlas-badge,
+.map-label {
+  border-radius: 2px !important;
+}
+
+.ready-dot {
+  box-shadow: none !important;
+}
+
+/* Japan/Brazil atlas: inherit desk type, drop Inter + lime glow */
+.japan-brazil-atlas {
+  font-family: 'Space Grotesk', sans-serif !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  color: var(--ink) !important;
+}
+
+.japan-brazil-atlas button {
+  border-radius: 2px !important;
+}
+
+.japan-brazil-atlas button:focus-visible,
+.japan-brazil-atlas a:focus-visible {
+  outline-color: var(--teal) !important;
+}
+
+@media (max-width: 900px) {
+  .site-header h1 {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+
+  .header-context {
+    min-width: 0;
+  }
+}

@@ -16,12 +16,15 @@
     "validate:ingestion": "node scripts/validate-ingestion.mjs"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
     "@supabase/supabase-js": "latest",
     "@vitejs/plugin-react": "latest",
     "d3-geo": "^3.1.2",
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "three": "^0.187.0",
     "typescript": "latest",
     "vite": "latest"
   },

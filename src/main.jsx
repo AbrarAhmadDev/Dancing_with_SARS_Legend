@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { geoMercator, geoPath } from 'd3-geo';
-import { ArrowLeftRight, Brain, ChevronRight, Database, Layers3, Map as MapIcon, Maximize2, Minus, Plus, Satellite, ShieldCheck, Waves } from 'lucide-react';
+import { ArrowLeftRight, Brain, ChevronRight, Database, Globe2, Layers3, Map as MapIcon, Maximize2, Minus, Plus, Satellite, ShieldCheck, Waves } from 'lucide-react';
 import { brazilFrames, frames, pakistanFireFrames, pakistanThermalFrames, pakistanVegetationFrames, pakistanWaterFrames } from './data';
 import { simulations, getSimulation } from './simulations';
 import { loadObservations } from './lib/observations';
+import JapanBrazilAtlas from './JapanBrazilAtlas';
+import GlobeSection from './GlobeSection';
+import SourcesSection from './SourcesSection';
 import './styles.css';
 import './raster.css';
 import './earth-map.css';
@@ -12,9 +15,12 @@ import './dashboard.css';
 import './mission.css';
 import './pakistan.css';
 import './revamp.css';
+import './ops-desk.css';
 
 const tabs = [
   { id: 'explore', label: 'Atlas', icon: MapIcon },
+  { id: 'globe', label: '3D Globe', icon: Globe2 },
+  { id: 'sources', label: 'Live Sources', icon: Database },
   { id: 'simulations', label: 'Change Signals', icon: Layers3 },
   { id: 'compare', label: 'Compare', icon: ArrowLeftRight },
   { id: 'quiz', label: 'Radar Classroom', icon: Brain }
@@ -189,9 +195,16 @@ function App() {
   useEffect(() => { loadObservations('brazil-flood-2024').then((result) => { if (result.source === 'supabase' && result.frames.length) setRemoteFrames(result.frames); }).catch(() => {}); }, []);
   return <main className="app-shell">
     <nav className="app-nav"><div className="brand"><Waves size={20} /> DANCING WITH THE SARs</div><div className="nav-meta">NASA SPACE APPS <span>·</span> FLOOD PULSE</div></nav>
-    <header className="site-header"><div><span className="eyebrow">PAKISTAN / SURFACE PULSE</span><h1>Read the Indus<br /><em>through radar.</em></h1><p>Explore repeat-pass NISAR observations across Pakistan’s floodplains, wetlands, and forest edges. Compare dates, inspect the map, and learn what the signal can—and cannot—tell us.</p></div><div className="header-context"><div className="context-label">ACTIVE CASE FILE</div><strong>{simulation.title}</strong><span>{simulation.subtitle}</span><small><span className="pulse" /> Cached locally · {simulation.frames.length} observations{remoteFrames.length !== frames.length ? ' · live catalog available' : ''}</small></div></header>
+    <header className="site-header"><div><span className="eyebrow">SURFACE PULSE</span><h1>Read change<br /><em>through radar.</em></h1><p>Japan and Brazil atlas demos, a 3D globe, and live ASF/Earthdata sources—kept separate from illustrative overlays so the signal stays honest.</p></div><div className="header-context"><div className="context-label">ACTIVE CASE FILE</div><strong>{simulation.title}</strong><span>{simulation.subtitle}</span><small><span className="pulse" /> Cached · {simulation.frames.length} observations{remoteFrames.length !== frames.length ? ' · live catalog' : ''}</small></div></header>
     <div className="tab-shell"><div className="tab-list" role="tablist" aria-label="Flood dashboard sections">{tabs.map(({ id, label, icon: Icon }) => <button id={`${id}-tab`} className={`tab-button ${tab === id ? 'is-active' : ''}`} role="tab" aria-selected={tab === id} aria-controls={`${id}-panel`} type="button" key={id} onClick={() => setTab(id)}><Icon size={16} />{label}</button>)}</div><div className="tab-rule" /></div>
-    <div className="tab-content"><div id="explore-panel" role="tabpanel" aria-labelledby="explore-tab" hidden={tab !== 'explore'}>{tab === 'explore' && <Explore simulation={simulation} setTab={setTab} />}</div><div id="simulations-panel" role="tabpanel" aria-labelledby="simulations-tab" hidden={tab !== 'simulations'}>{tab === 'simulations' && <Simulations selectedId={selectedId} setSelectedId={setSelectedId} setTab={setTab} />}</div><div id="compare-panel" role="tabpanel" aria-labelledby="compare-tab" hidden={tab !== 'compare'}>{tab === 'compare' && <Compare simulation={simulation} />}</div><div id="quiz-panel" role="tabpanel" aria-labelledby="quiz-tab" hidden={tab !== 'quiz'}>{tab === 'quiz' && <Quiz simulation={simulation} />}</div></div>
+    <div className="tab-content">
+      <div id="explore-panel" role="tabpanel" aria-labelledby="explore-tab" hidden={tab !== 'explore'}>{tab === 'explore' && <JapanBrazilAtlas />}</div>
+      <div id="globe-panel" role="tabpanel" aria-labelledby="globe-tab" hidden={tab !== 'globe'}>{tab === 'globe' && <GlobeSection />}</div>
+      <div id="sources-panel" role="tabpanel" aria-labelledby="sources-tab" hidden={tab !== 'sources'}>{tab === 'sources' && <SourcesSection />}</div>
+      <div id="simulations-panel" role="tabpanel" aria-labelledby="simulations-tab" hidden={tab !== 'simulations'}>{tab === 'simulations' && <Simulations selectedId={selectedId} setSelectedId={setSelectedId} setTab={setTab} />}</div>
+      <div id="compare-panel" role="tabpanel" aria-labelledby="compare-tab" hidden={tab !== 'compare'}>{tab === 'compare' && <Compare simulation={simulation} />}</div>
+      <div id="quiz-panel" role="tabpanel" aria-labelledby="quiz-tab" hidden={tab !== 'quiz'}>{tab === 'quiz' && <Quiz simulation={simulation} />}</div>
+    </div>
     <footer><span>Built for “Dancing with the SARs”</span><span><Database size={13} /> <a href="https://nisar-docs.asf.alaska.edu/gcov/" target="_blank" rel="noreferrer">NISAR GCOV</a> · <a href="https://www.earthdata.nasa.gov/data/projects/opera" target="_blank" rel="noreferrer">OPERA DSWx</a> · <a href="https://nasa-gibs.github.io/gibs-api-docs/" target="_blank" rel="noreferrer">NASA GIBS</a></span></footer>
   </main>;
 }
