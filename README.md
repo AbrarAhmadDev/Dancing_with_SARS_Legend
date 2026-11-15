@@ -1,4 +1,31 @@
-# Dancing with the SARs — Flood Pulse
+# Surface Stories — Flood & Fire
+
+## Current interface (15 November 2026)
+
+The active entrypoint is `src/studio-entry.jsx`. It presents a 30-second educational sequence: 15 seconds of blue flood expansion, then 15 seconds of orange/red fire spread. Playback can be paused, scrubbed, restarted, and inspected; Compare provides independent stages and Learn provides image-based questions.
+
+**The terrain, spread footprints, and timing are synthetic.** They are not georeferenced maps, observed flood/fire perimeters, forecasts, or NISAR analysis. Real NASA Earth Observatory images are shown separately as historical references:
+
+- Honshu, Japan, Typhoon Hagibis: Aqua MODIS, 13 October 2019. [NASA report](https://science.nasa.gov/earth/earth-observatory/hagibis-floods-japan-145736/).
+- Brazilian Amazon, South America: fire-season reference, 11 August 2019. [NASA report](https://science.nasa.gov/earth/earth-observatory/fires-in-brazil-145464/).
+
+Reference images are bundled under `public/data/references` and require no API key. Deterministic local rendering makes repeat playback independent of network requests. It does not cache or download a real time-series dataset.
+
+### Geographic audit
+
+Earlier Pakistan views have been withdrawn from the active interface. A GIBS WMS 1.3.0 request with EPSG:4326 used longitude-first coordinates despite that CRS requiring latitude-first BBOX order. National previews were also used under local labels without verified registration. The previous assets remain in the repository for audit; they must not be interpreted as spatially validated evidence. See the Sources tab for the correction.
+
+### Verify this release
+
+Run `npm test`, `npm run build`, `npm run validate:data`, and `npm run validate:ingestion`. The spread tests verify chapter boundaries and monotonically expanding, deterministic footprints. Browser checks cover playback, scrubbing, scene selection, comparison, and quiz feedback. These checks validate application behavior, **not scientific accuracy of a disaster reconstruction**.
+
+To resume measured analysis, verify each asset's bounds, CRS, acquisition timestamp, sensor, nodata mask, and alignment before publishing a location. Missing observations must remain gaps rather than invented dates.
+
+---
+
+## Archived implementation notes
+
+The notes below describe earlier iterations and ingestion infrastructure, not capabilities of the current active interface.
 
 This repository contains the first safe prototype for the NASA Space Apps “Dancing with the SARs” challenge.
 
