@@ -2,7 +2,9 @@
 
 ## Current interface (15 November 2026)
 
-The active entrypoint is `src/studio-entry.jsx`. It presents a 30-second educational sequence: 15 seconds of blue flood expansion, then 15 seconds of orange/red fire spread. Playback can be paused, scrubbed, restarted, and inspected; Compare provides independent stages and Learn provides image-based questions.
+The active entrypoint is `src/studio-entry.jsx`. Atlas is the main view, with a clickable Natural Earth country locator, Japan/Brazil country sections, a change-type selector, and a **30-second Demo for each selected event**. Japan shows blue flood expansion; Brazil shows orange/red fire activity over vegetation. Timeline and opacity sliders, five stage shortcuts, pause/resume, reset, and zoom are available. Compare provides independent stages and Learn provides image-based questions.
+
+Open the deployed app or `npm run dev`; opening `index.html` directly with `file://` does not run the Vite application. Shareable routes: `/#atlas/japan`, `/#atlas/brazil`, `/#compare/japan`, and `/#compare/brazil`. Country/event changes reset playback and comparison stages; tab changes pause playback.
 
 **The terrain, spread footprints, and timing are synthetic.** They are not georeferenced maps, observed flood/fire perimeters, forecasts, or NISAR analysis. Real NASA Earth Observatory images are shown separately as historical references:
 
@@ -17,7 +19,9 @@ Earlier Pakistan views have been withdrawn from the active interface. A GIBS WMS
 
 ### Verify this release
 
-Run `npm test`, `npm run build`, `npm run validate:data`, and `npm run validate:ingestion`. The spread tests verify chapter boundaries and monotonically expanding, deterministic footprints. Browser checks cover playback, scrubbing, scene selection, comparison, and quiz feedback. These checks validate application behavior, **not scientific accuracy of a disaster reconstruction**.
+Run `npm test`, `npm run build`, `npm run validate:data`, and `npm run validate:ingestion`. Tests verify full 30-second playback, pause/resume/replay, country resets and deep links, independent comparison sliders, country marker containment, and monotonically expanding deterministic footprints. Canvas rendering is checked separately in a real browser; component tests use a mocked canvas and controlled animation clock. These checks validate application behavior, **not scientific accuracy of a disaster reconstruction**. CI uses `npm ci` and fails on missing tests or failed tests.
+
+The locator geometry in `src/data/world.json` derives from [Natural Earth's 1:110m country data](https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_admin_0_countries.geojson), downloaded 15 November 2026. It retains the original geometry with only country name/code properties; [public-domain terms](https://www.naturalearthdata.com/about/terms-of-use/). Locator markers indicate broad reference regions, not observed disaster boundaries. Fire colors are qualitative illustration, not measured heat or temperature.
 
 To resume measured analysis, verify each asset's bounds, CRS, acquisition timestamp, sensor, nodata mask, and alignment before publishing a location. Missing observations must remain gaps rather than invented dates.
 
